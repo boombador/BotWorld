@@ -1,10 +1,6 @@
 # This is a repo whose future is still undecided
 
-Stuff to be done
+Not sure if this is going to be more of a game or a simulator or what. Mostly playing around.
 
-[x] get it on github
-[ ] solidify idea
-[ ] orient the objects
-[ ] solid coding
-[ ] documentation, bro
-[ ] profit
+***
+Edited with GitHub in-browser editor, which is pretty cool.
