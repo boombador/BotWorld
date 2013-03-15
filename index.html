@@ -22,28 +22,20 @@
 
 	<body>
         <script src="https://raw.github.com/mrdoob/three.js/master/build/three.js"></script>
+        <script src="game.js"></script>
         <script>
             // code
-            var scene = new THREE.Scene();
-            var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+            init();
 
-            var renderer = new THREE.CanvasRenderer();
-            renderer.setSize( window.innerWidth, window.innerHeight );
-            document.body.appendChild( renderer.domElement );
-            var geometry = new THREE.CubeGeometry(1,1,1);
-            var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-            var cube = new THREE.Mesh( geometry, material );
-            scene.add( cube );
-
-            cube.position.x = 1;
-            cube.position.y = 1;
-            camera.position.z = 5;
+            engine.cube.position.x = 1;
+            engine.cube.position.y = 1;
+            engine.camera.position.z = 5;
 
             function render() {
                 requestAnimationFrame(render);
-                renderer.render(scene, camera);
-                cube.rotation.x -= .01;
-                cube.rotation.y += .05;
+                engine.renderer.render( engine.scene, engine.camera);
+                engine.cube.rotation.x -= .01;
+                engine.cube.rotation.y += .05;
             }
             render();
         </script>
