@@ -38,6 +38,7 @@
             var timestepStart;
             var timestepEnd = Date.now();
             
+            engine.player.moveTo(0,0);
             function render() {
                 requestAnimationFrame(render);
                 
@@ -46,10 +47,10 @@
                 timeLapse = (timestepEnd - timestepStart) / 1000;
                 
                 objs.renderer.render( objs.scene, objs.camera);
-                engine.player.x += 1 * timeLapse;
-                engine.player.updateBody();
-                objs.cube.rotation.x -= .01;
-                objs.cube.rotation.y += .05;
+                
+                plyr = engine.player;
+                plyr.step(timeLapse);
+                plyr.updateBody();
             }
             render();
         </script>
