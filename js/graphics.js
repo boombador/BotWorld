@@ -1,3 +1,7 @@
+var timeLapse;
+var timestepStart;
+var timestepEnd;
+
 function initWorld() {
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 100 );
@@ -19,4 +23,18 @@ function initWorld() {
     components.renderer = renderer;
 
     return components;
+}
+
+function render() {
+    requestAnimationFrame(render);
+    
+    timestepStart = timestepEnd;
+    timestepEnd = Date.now();
+    timeLapse = (timestepEnd - timestepStart) / 1000;
+    
+    objs.renderer.render( objs.scene, objs.camera);
+    
+    plyr = engine.player;
+    plyr.step(timeLapse);
+    plyr.updateBody();
 }

@@ -28,26 +28,8 @@
         <script>
             var objs = initWorld();
             engine.player.affix(objs.cube);
-            
-            // the first timeLapse can be thought of as the set-up time while loading the page
-            var timeLapse;
-            var timestepStart;
-            var timestepEnd = Date.now();
-            
             engine.player.moveTo(0,0);
-            function render() {
-                requestAnimationFrame(render);
-                
-                timestepStart = timestepEnd;
-                timestepEnd = Date.now();
-                timeLapse = (timestepEnd - timestepStart) / 1000;
-                
-                objs.renderer.render( objs.scene, objs.camera);
-                
-                plyr = engine.player;
-                plyr.step(timeLapse);
-                plyr.updateBody();
-            }
+            timestepEnd = Date.now();
             render();
         </script>
     </body>
