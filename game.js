@@ -1,13 +1,13 @@
 var engine = {
-	player: new Player(2, 2),
-	width: 5,
-	height: 5
+    player: new Player(2, 2),
+    width: 5,
+    height: 5
 };
 
 function Player(x, y) {
     // current coordinates
-	this.x = x;
-	this.y = y;
+    this.x = x;
+    this.y = y;
     // moveTo coordinates
     this.mx = x;
     this.my = y;
