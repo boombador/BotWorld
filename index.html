@@ -22,16 +22,11 @@
 
     <body>
         <script src="https://raw.github.com/mrdoob/three.js/master/build/three.js"></script>
-        <script src="graphics.js"></script>
-        <script src="Player.js"></script>
-        <script src="game.js"></script>
+        <script src="js/graphics.js"></script>
+        <script src="js/Player.js"></script>
+        <script src="js/game.js"></script>
         <script>
             var objs = initWorld();
-            
-            objs.cube.position.x = 1;
-            objs.cube.position.y = 1;
-            objs.camera.position.z = 15;
-            
             engine.player.affix(objs.cube);
             
             // the first timeLapse can be thought of as the set-up time while loading the page

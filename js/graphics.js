@@ -1,6 +1,7 @@
 function initWorld() {
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 100 );
+    camera.position.z = 15;
 
     var renderer = new THREE.CanvasRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
