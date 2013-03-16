@@ -1,9 +1,3 @@
-var engine = {
-    player: new Player(-10, 0),
-    width: 5,
-    height: 5
-};
-
 function Player(x, y) {
     // current coordinates
     this.x = x;
