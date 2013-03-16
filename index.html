@@ -26,16 +26,28 @@
         <script src="game.js"></script>
         <script>
             var objs = initWorld();
-
+            
             objs.cube.position.x = 1;
             objs.cube.position.y = 1;
-            objs.camera.position.z = 5;
-
+            objs.camera.position.z = 15;
+            
             engine.player.affix(objs.cube);
-
+            
+            // the first timeLapse can be thought of as the set-up time while loading the page
+            var timeLapse;
+            var timestepStart;
+            var timestepEnd = Date.now();
+            
             function render() {
                 requestAnimationFrame(render);
+                
+                timestepStart = timestepEnd;
+                timestepEnd = Date.now();
+                timeLapse = (timestepEnd - timestepStart) / 1000;
+                
                 objs.renderer.render( objs.scene, objs.camera);
+                engine.player.x += 1 * timeLapse;
+                engine.player.updateBody();
                 objs.cube.rotation.x -= .01;
                 objs.cube.rotation.y += .05;
             }
