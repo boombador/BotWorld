@@ -18,12 +18,17 @@ function init() {
     document.body.appendChild( renderer.domElement );
     var geometry = new THREE.CubeGeometry(1,1,1);
     var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    engine.cube = new THREE.Mesh( geometry, material );
-    scene.add( engine.cube );
+    var cube = new THREE.Mesh( geometry, material );
+    scene.add( cube );
 
-    engine.scene = scene;
-    engine.camera = camera;
-    engine.renderer = renderer;
+    var components = {};
+    components.scene = scene;
+    components.camera = camera;
+    components.renderer = renderer;
+    components.cube = cube;
+    components.renderer = renderer;
+
+    return components;
 }
 
 // deprecated
@@ -32,6 +37,4 @@ Player.prototype.draw = function() {
 	document.getElementById(loc).className += " player";
 };
 
-// engine.player.draw();
 engine.player.x = 3;
-// engine.player.draw();

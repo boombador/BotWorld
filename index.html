@@ -25,17 +25,17 @@
         <script src="game.js"></script>
         <script>
             // code
-            init();
+            var objs = init();
 
-            engine.cube.position.x = 1;
-            engine.cube.position.y = 1;
-            engine.camera.position.z = 5;
+            objs.cube.position.x = 1;
+            objs.cube.position.y = 1;
+            objs.camera.position.z = 5;
 
             function render() {
                 requestAnimationFrame(render);
-                engine.renderer.render( engine.scene, engine.camera);
-                engine.cube.rotation.x -= .01;
-                engine.cube.rotation.y += .05;
+                objs.renderer.render( objs.scene, objs.camera);
+                objs.cube.rotation.x -= .01;
+                objs.cube.rotation.y += .05;
             }
             render();
         </script>
