@@ -28,10 +28,11 @@
         <script src="js/game.js"></script>
         <script>
             var objs = initWorld();
-            engine.player.affix(objs.cube);
+            engine.player.affix(objs.playerCube);
+            engine.resource.affix(objs.resourceCube);
             engine.player.moveTo(0,0);
             timestepEnd = Date.now();
-            render();
+            animate();
         </script>
     </body>
 </html>
