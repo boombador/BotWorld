@@ -13,6 +13,8 @@ function Player(x, y) {
 
     // mesh that should be updated for Three.js render calls
     this.body = null;
+    this.heldResource = 0;
+    this.maxResource = 8;
 }
 
 Player.prototype.affix = function(mesh) {
@@ -27,16 +29,12 @@ Player.prototype.moveTo = function(x, y) {
 }
 
 Player.prototype.step = function(timelapse) {
-    // random stuff just to make cube interesting
-    this.body.rotation.x -= .1 * timelapse;
-    this.body.rotation.y += .5 * timelapse;
-
     var dx = this.mx - this.x;
     var dy = this.my - this.y;
     var mag = Math.sqrt(dx*dx + dy*dy);
 
     // return if already at 
-    if (mag <= .1) {
+    if (mag <= .05) {
         this.x = this.mx;
         this.y = this.my;
         return;
