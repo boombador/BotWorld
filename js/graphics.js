@@ -5,10 +5,20 @@ var timestepEnd;
 function initWorld() {
     var scene = new THREE.Scene();
 
-    var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 100 );
-    // var camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
+    var sceneCenter = new THREE.Vector3(0, 0, 0);
+    var cameraPos = new THREE.Vector3(0, 0, 15);
+    var toOrigin = new THREE.Vector3();
 
-    camera.position.z = 15;
+    var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 100 );
+    camera.position.x = cameraPos.x;
+    camera.position.y = cameraPos.y;
+    camera.position.z = cameraPos.z;
+
+    toOrigin.subVectors(sceneCenter, cameraPos);
+    camera.lookAt(toOrigin);
+
+
+    // var camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
     // camera.lookAt();
     scene.add(camera);
 
