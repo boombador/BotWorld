@@ -28,9 +28,11 @@
         <script src="js/game.js"></script>
         <script>
             var objs = initWorld();
-            engine.player.affix(objs.playerCube);
+            var geometry = new THREE.CubeGeometry(1,1,1);
+            var playerMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
             engine.resource.affix(objs.resourceCube);
-            engine.player.moveTo(1,1);
+            engine.player.spawn(geometry, playerMaterial, objs.scene);
+            engine.player.moveTo(0,1);
             timestepEnd = Date.now();
             animate();
         </script>

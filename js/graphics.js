@@ -28,18 +28,14 @@ function initWorld() {
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
     var geometry = new THREE.CubeGeometry(1,1,1);
-    var playerMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
     var resourceMaterial = new THREE.MeshBasicMaterial( { color: 0x0000dd } );
-    var playerCube = new THREE.Mesh( geometry, playerMaterial );
     var resourceCube = new THREE.Mesh( geometry, resourceMaterial );
-    scene.add( playerCube );
     scene.add( resourceCube );
 
     var components = {};
     components.scene = scene;
     components.camera = camera;
     components.renderer = renderer;
-    components.playerCube = playerCube;
     components.resourceCube = resourceCube;
     components.renderer = renderer;
 
