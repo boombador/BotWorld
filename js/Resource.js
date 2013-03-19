@@ -4,6 +4,10 @@ function Resource(x, y, val) {
     this.value = val;
 
     this.body = null;
+
+    var geometry = new THREE.CubeGeometry(1,1,1);
+    var resourceMaterial = new THREE.MeshBasicMaterial( { color: 0x0000dd } );
+    var resourceCube = new THREE.Mesh( geometry, resourceMaterial );
 }
 
 /* returns amount of resources succesfully mined */

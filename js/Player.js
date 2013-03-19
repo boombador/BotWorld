@@ -13,8 +13,19 @@ function Player(x, y) {
 
     // mesh that should be updated for Three.js render calls
     this.body = null;
+    this.geometry = null;
+    this.material = null;
     this.heldResource = 0;
     this.maxResource = 8;
+
+}
+
+Player.prototype.spawn = function(geometry, material, scene) {
+    this.geometry = geometry;
+    this.material = material;
+    this.body = new THREE.Mesh(geometry, material);
+    scene.add(this.body);
+    return this.body;
 }
 
 Player.prototype.affix = function(mesh) {
