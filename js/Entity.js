@@ -1,6 +1,7 @@
 function Entity(x, y) {
     this.x = x;
     this.y = y;
+    this.z = .5;
 
     this.body = null;
     this.geometry = null;
@@ -18,4 +19,5 @@ Entity.prototype.concept = function(geometry, material, scene) {
 Entity.prototype.updateBody = function() {
     this.body.position.x = this.x;
     this.body.position.y = this.y;
+    this.body.position.z = this.z;
 }

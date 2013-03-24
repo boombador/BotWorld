@@ -2,8 +2,6 @@ function Resource(x, y, val) {
     this.base = Entity;
     this.base(x, y);
     this.value = val || 10;
-
-    // var resourceCube = new THREE.Mesh( geometry, resourceMaterial );
 }
 
 Resource.prototype = new Entity;
@@ -31,10 +29,4 @@ Resource.prototype.harvest = function(capacity) {
     // TODO: destroy resource block if emptied
 
     return harvested;
-}
-
-Resource.prototype.affix = function(mesh) {
-    this.body = mesh;
-    mesh.position.x = this.x;
-    mesh.position.y = this.y
 }
