@@ -1,7 +1,6 @@
 function Player(x, y) {
-    // current coordinates
-    this.x = x;
-    this.y = y;
+    this.base = Entity;
+    this.base(x, y);
 
     this.speed = 1;
     this.vx = 0;
@@ -12,13 +11,12 @@ function Player(x, y) {
     this.my = y;
 
     // mesh that should be updated for Three.js render calls
-    this.body = null;
-    this.geometry = null;
-    this.material = null;
     this.heldResource = 0;
     this.maxResource = 8;
 
 }
+
+Player.prototype = new Entity;
 
 Player.prototype.concept = function(geometry, material, scene) {
     this.geometry = geometry;
