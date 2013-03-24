@@ -1,7 +1,7 @@
-function Player(x, y) {
+function Player(x, y, name) {
     this.base = Entity;
     this.base(x, y);
-
+    this.name = name || "Carlito";
     this.speed = 1;
     this.vx = 0;
     this.vy = 0;
@@ -18,28 +18,14 @@ function Player(x, y) {
 
 Player.prototype = new Entity;
 
-Player.prototype.concept = function(geometry, material, scene) {
-    this.geometry = geometry;
-    this.material = material;
-    this.body = new THREE.Mesh(geometry, material);
-    scene.add(this.body);
-    return this.body;
-}
-
-Player.prototype.birth = function(scene, name, geometry, material) {
+Player.prototype.birth = function(scene, geometry, material) {
     var geometry = geometry || new THREE.CubeGeometry(1,1,1);
     var material = material || new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    this.name = name || "Carlito";
+    
     if (debug) {
         console.log(this.name +" is born into the world");
     }
-    return Player.prototype.concept.call(this, geometry, material, scene);
-}
-
-Player.prototype.affix = function(mesh) {
-    this.body = mesh;
-    mesh.position.x = this.x;
-    mesh.position.y = this.y
+    return Entity.prototype.concept.call(this, geometry, material, scene);
 }
 
 Player.prototype.moveTo = function(x, y) {
@@ -66,7 +52,3 @@ Player.prototype.step = function(timelapse) {
     this.y += this.vy * timeLapse;
 }
 
-Player.prototype.updateBody = function() {
-    this.body.position.x = this.x;
-    this.body.position.y = this.y;
-}
