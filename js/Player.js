@@ -20,12 +20,22 @@ function Player(x, y) {
 
 }
 
-Player.prototype.spawn = function(geometry, material, scene) {
+Player.prototype.concept = function(geometry, material, scene) {
     this.geometry = geometry;
     this.material = material;
     this.body = new THREE.Mesh(geometry, material);
     scene.add(this.body);
     return this.body;
+}
+
+Player.prototype.birth = function(scene, name, geometry, material) {
+    var geometry = geometry || new THREE.CubeGeometry(1,1,1);
+    var material = material || new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    this.name = name || "Carlito";
+    if (debug) {
+        console.log(this.name +" is born into the world");
+    }
+    return Player.prototype.concept.call(this, geometry, material, scene);
 }
 
 Player.prototype.affix = function(mesh) {
