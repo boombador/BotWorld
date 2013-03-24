@@ -1,9 +1,20 @@
 function Resource(x, y, val) {
-    this.x = x;
-    this.y = y;
-    this.value = val;
+    this.base = Entity;
+    this.base(x, y);
+    this.value = val || 10;
 
-    this.body = null;
+    // var resourceCube = new THREE.Mesh( geometry, resourceMaterial );
+}
+
+Resource.prototype = new Entity;
+
+Resource.prototype.deposit = function(scene, geometry, material) {
+    var geometry = geometry || new THREE.CubeGeometry(1,1,1);
+    var material = material || new THREE.MeshBasicMaterial( { color: 0x0000dd } );
+    if (debug) {
+        console.log("Resource deposit formed at ("+this.x+", "+this.y+").");
+    }
+    return Entity.prototype.concept.call(this, geometry, material, scene);
 }
 
 /* returns amount of resources succesfully mined */

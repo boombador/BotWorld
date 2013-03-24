@@ -1,8 +1,7 @@
-function Player(x, y) {
-    // current coordinates
-    this.x = x;
-    this.y = y;
-
+function Player(x, y, name) {
+    this.base = Entity;
+    this.base(x, y);
+    this.name = name || "Carlito";
     this.speed = 1;
     this.vx = 0;
     this.vy = 0;
@@ -12,15 +11,21 @@ function Player(x, y) {
     this.my = y;
 
     // mesh that should be updated for Three.js render calls
-    this.body = null;
     this.heldResource = 0;
     this.maxResource = 8;
+
 }
 
-Player.prototype.affix = function(mesh) {
-    this.body = mesh;
-    mesh.position.x = this.x;
-    mesh.position.y = this.y
+Player.prototype = new Entity;
+
+Player.prototype.birth = function(scene, geometry, material) {
+    var geometry = geometry || new THREE.CubeGeometry(1,1,1);
+    var material = material || new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    
+    if (debug) {
+        console.log(this.name +" is born into the world");
+    }
+    return Entity.prototype.concept.call(this, geometry, material, scene);
 }
 
 Player.prototype.moveTo = function(x, y) {
@@ -47,7 +52,3 @@ Player.prototype.step = function(timelapse) {
     this.y += this.vy * timeLapse;
 }
 
-Player.prototype.updateBody = function() {
-    this.body.position.x = this.x;
-    this.body.position.y = this.y;
-}
