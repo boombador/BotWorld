@@ -26,11 +26,6 @@ function initWorld() {
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
-    // var geometry = new THREE.CubeGeometry(1,1,1);
-    // var resourceMaterial = new THREE.MeshBasicMaterial( { color: 0x0000dd } );
-    // var resourceCube = new THREE.Mesh( geometry, resourceMaterial );
-    // scene.add( resourceCube );
-
     var components = {};
     components.scene = scene;
     components.camera = camera;
