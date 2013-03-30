@@ -10,10 +10,6 @@ function initWorld() {
     var toOrigin = new THREE.Vector3();
 
     var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 100 );
-    /* var width = 100;
-    var height = 70;
-    var camera = new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 1, 1000 );*/
-    // var camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
     camera.position.x = cameraPos.x;
     camera.position.y = cameraPos.y;
     camera.position.z = cameraPos.z;
@@ -44,6 +40,11 @@ function animate() {
     var plyr = engine.player;
     plyr.step(timeLapse);
     plyr.updateBody();
+
+    var rsrc = engine.resources[0];
+    rsrc.updateBody();
+    var rsrc = engine.resources[1];
+    rsrc.updateBody();
 
     objs.renderer.render( objs.scene, objs.camera);
 }
