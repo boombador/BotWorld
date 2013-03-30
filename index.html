@@ -1,29 +1,10 @@
 <!doctype html>
 <html>
     <head>
-        <style>
-            #board {
-                width: 250px;
-                height: 250px;
-            }
-            .cell {
-                width: 48px;
-                height: 48px;
-                background-color: gray;
-                float: left;
-                border: 1px solid black;
-            }
-            #board .player {
-                background-color: green;
-            }
-            <style>canvas { width: 100%; height: 100% }</style>
-        </style>
+        <style src="style.css"></style>
     </head>
 
     <body>
-        <script>
-            var debug = true;
-        </script>
         <script src="https://raw.github.com/mrdoob/three.js/master/build/three.js"></script>
         <script src="js/graphics.js"></script>
         <script src="js/Entity.js"></script>
@@ -31,6 +12,11 @@
         <script src="js/Player.js"></script>
         <script src="js/Resource.js"></script>
         <script>
+            var debug = true;
+            var timeLapse;
+            var timestepStart;
+            var timestepEnd;
+
             var engine = {
                 entities: [
                     new Player(-5, 0, "Ian"),
@@ -39,7 +25,7 @@
                     new Resource(-3, 6, 10)
                 ],
                 resources: new Array(),
-                initEntities: function(scene) {
+                initEntities: function() {
                     var i;
                     var len = this.entities.length;
                     for (i = 0; i < len; i++) {
@@ -47,18 +33,17 @@
                         var obj = this.entities[i];
                         if (obj.type == "Player") {
                             this.player = obj;
-                            obj.birth(scene);
+                            obj.birth(this.world.scene);
                         } else if (obj.type == "Terrain") {
                             this.terrain = obj;
-                            obj.arise(scene);
+                            obj.arise(this.world.scene);
                         } else if (obj.type == "Resource") {
                             this.resources.push(obj);
-                            obj.deposit(scene);
+                            obj.deposit(this.world.scene);
                         }
 
                     }
                 },
-
                 updateEntities: function() {
                     for (var i = 0, len = this.entities.length; i < len; i++) {
                         var obj = this.entities[i];
@@ -66,13 +51,16 @@
                         obj.updateBody();
                     }
                 },
+                run: function() {
+                    timestepEnd = Date.now();
+                    animate();
+                },
             };
 
-            var world = initWorld();
-            engine.initEntities(world.scene);
+            engine.world = initWorld();
+            engine.initEntities();
             engine.player.moveTo(-3, 5);
-            timestepEnd = Date.now();
-            animate();
+            engine.run();
         </script>
     </body>
 </html>

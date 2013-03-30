@@ -1,6 +1,3 @@
-var timeLapse;
-var timestepStart;
-var timestepEnd;
 
 function initWorld() {
     var scene = new THREE.Scene();
@@ -38,6 +35,5 @@ function animate() {
     timeLapse = (timestepEnd - timestepStart) / 1000;
     
     engine.updateEntities();
-
-    world.renderer.render( world.scene, world.camera);
+    engine.world.renderer.render( engine.world.scene, engine.world.camera);
 }
