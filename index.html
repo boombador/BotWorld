@@ -32,25 +32,45 @@
         <script src="js/Resource.js"></script>
         <script>
             var engine = {
-                entities: [new Player(-5, 0, "Ian"), new Terrain(0, 0, 5, 5), [new Resource(1, 0, 50), new Resource(-3, 6, 10)]],
-                player: 0,
-                terrain: 1,
-                resources: 2,
-                initEntities: function() {
-                    this.player = this.entities[this.player];
-                    this.terrain = this.entities[this.terrain];
-                    this.resources = this.entities[this.resources];
+                entities: [
+                    new Player(-5, 0, "Ian"),
+                    new Terrain(0, 0, 5, 5),
+                    new Resource(1, 0, 50),
+                    new Resource(-3, 6, 10)
+                ],
+                resources: new Array(),
+                initEntities: function(scene) {
+                    var i;
+                    var len = this.entities.length;
+                    for (i = 0; i < len; i++) {
 
-                    this.player.birth(objs.scene);
-                    this.player.moveTo(-3,5);
-                    this.terrain.arise(objs.scene);
-                    this.resources[0].deposit(objs.scene);
-                    this.resources[1].deposit(objs.scene);
-                }
+                        var obj = this.entities[i];
+                        if (obj.type == "Player") {
+                            this.player = obj;
+                            obj.birth(scene);
+                        } else if (obj.type == "Terrain") {
+                            this.terrain = obj;
+                            obj.arise(scene);
+                        } else if (obj.type == "Resource") {
+                            this.resources.push(obj);
+                            obj.deposit(scene);
+                        }
+
+                    }
+                },
+
+                updateEntities: function() {
+                    for (var i = 0, len = this.entities.length; i < len; i++) {
+                        var obj = this.entities[i];
+                        obj.step();
+                        obj.updateBody();
+                    }
+                },
             };
 
-            var objs = initWorld();
-            engine.initEntities();
+            var world = initWorld();
+            engine.initEntities(world.scene);
+            engine.player.moveTo(-3, 5);
             timestepEnd = Date.now();
             animate();
         </script>

@@ -3,6 +3,7 @@ function Entity(x, y) {
     this.y = y;
     this.z = .5;
 
+    this.type = "Entity";
     this.body = null;
     this.geometry = null;
     this.material = null;
@@ -20,4 +21,8 @@ Entity.prototype.updateBody = function() {
     this.body.position.x = this.x;
     this.body.position.y = this.y;
     this.body.position.z = this.z;
+}
+
+Entity.prototype.step = function() {
+    return null;
 }

@@ -1,6 +1,8 @@
 function Terrain(x, y, width, height) {
     this.base = Entity;
     this.base(x, y);
+    this.type = "Terrain";
+
     this.width = width || 5;
     this.height = height || 5;
 }

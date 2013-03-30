@@ -1,6 +1,7 @@
 function Resource(x, y, val) {
     this.base = Entity;
     this.base(x, y);
+    this.type = "Resource";
     this.value = val || 10;
 }
 

@@ -37,14 +37,7 @@ function animate() {
     timestepEnd = Date.now();
     timeLapse = (timestepEnd - timestepStart) / 1000;
     
-    var plyr = engine.player;
-    plyr.step(timeLapse);
-    plyr.updateBody();
+    engine.updateEntities();
 
-    var rsrc = engine.resources[0];
-    rsrc.updateBody();
-    var rsrc = engine.resources[1];
-    rsrc.updateBody();
-
-    objs.renderer.render( objs.scene, objs.camera);
+    world.renderer.render( world.scene, world.camera);
 }
