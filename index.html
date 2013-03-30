@@ -32,18 +32,25 @@
         <script src="js/Resource.js"></script>
         <script>
             var engine = {
-                terrain: new Terrain(0, 0, 5, 5),
-                player: new Player(-5, 0, "Ian"),
-                resources: [new Resource(1, 0, 50), new Resource(-3, 6, 10)],
-                entities: [],
+                entities: [new Player(-5, 0, "Ian"), new Terrain(0, 0, 5, 5), [new Resource(1, 0, 50), new Resource(-3, 6, 10)]],
+                player: 0,
+                terrain: 1,
+                resources: 2,
+                initEntities: function() {
+                    this.player = this.entities[this.player];
+                    this.terrain = this.entities[this.terrain];
+                    this.resources = this.entities[this.resources];
+
+                    this.player.birth(objs.scene);
+                    this.player.moveTo(-3,5);
+                    this.terrain.arise(objs.scene);
+                    this.resources[0].deposit(objs.scene);
+                    this.resources[1].deposit(objs.scene);
+                }
             };
 
             var objs = initWorld();
-            engine.player.birth(objs.scene);
-            engine.player.moveTo(-3,5);
-            engine.terrain.arise(objs.scene);
-            engine.resources[0].deposit(objs.scene);
-            engine.resources[1].deposit(objs.scene);
+            engine.initEntities();
             timestepEnd = Date.now();
             animate();
         </script>
