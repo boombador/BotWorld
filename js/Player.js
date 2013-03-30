@@ -2,10 +2,13 @@ function Player(x, y, name) {
     this.base = Entity;
     this.base(x, y);
     this.name = name || "Carlito";
+    this.type = "Player";
+
+    // movement variables
+    // speed
     this.speed = 1;
     this.vx = 0;
     this.vy = 0;
-
     // moveTo coordinates
     this.mx = x;
     this.my = y;

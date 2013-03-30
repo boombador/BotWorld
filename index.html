@@ -1,48 +1,31 @@
 <!doctype html>
 <html>
     <head>
-        <style>
-            #board {
-                width: 250px;
-                height: 250px;
-            }
-            .cell {
-                width: 48px;
-                height: 48px;
-                background-color: gray;
-                float: left;
-                border: 1px solid black;
-            }
-            #board .player {
-                background-color: green;
-            }
-            <style>canvas { width: 100%; height: 100% }</style>
-        </style>
+        <style src="style.css"></style>
     </head>
 
     <body>
-        <script>
-            var debug = true;
-        </script>
         <script src="https://raw.github.com/mrdoob/three.js/master/build/three.js"></script>
-        <script src="js/graphics.js"></script>
         <script src="js/Entity.js"></script>
+        <script src="js/Terrain.js"></script>
         <script src="js/Player.js"></script>
         <script src="js/Resource.js"></script>
+        <script src="js/Engine.js"></script>
         <script>
-            var engine = {
-                player: new Player(-5, 0, "Ian"),
-                resource: new Resource(1, 0, 50),
-                width: 5,
-                height: 5
-            };
+            var debug = true;
 
-            var objs = initWorld();
-            engine.player.birth(objs.scene);
-            engine.player.moveTo(0,1);
-            engine.resource.deposit(objs.scene);
-            timestepEnd = Date.now();
-            animate();
+            entities = [
+                new Player(-5, 0, "Ian"),
+                new Terrain(0, 0, 5, 5),
+                new Resource(1, 0, 50),
+                new Resource(-3, 6, 10),
+                new Resource(3, 6, 10)
+            ];
+            var engine = new Engine();
+            engine.initWorld();
+            engine.initEntities(entities);
+            engine.player.moveTo(-3, 5);
+            engine.run();
         </script>
     </body>
 </html>

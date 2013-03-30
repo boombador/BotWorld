@@ -1,3 +1,3 @@
-# I don't know what this will be
+# BotWorld
 
-Some kind of board game maybe.
+Watch as the cubes devour the resources spread across the terrain
