@@ -8,13 +8,13 @@ function initWorld() {
     var sceneCenter = new THREE.Vector3(0, 0, 0);
     var cameraPos = new THREE.Vector3(0, -10, 15);
     var toOrigin = new THREE.Vector3();
+    toOrigin.subVectors(sceneCenter, cameraPos);
 
     var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 100 );
     camera.position.x = cameraPos.x;
     camera.position.y = cameraPos.y;
     camera.position.z = cameraPos.z;
 
-    toOrigin.subVectors(sceneCenter, cameraPos);
     camera.lookAt(toOrigin);
     scene.add(camera);
 
