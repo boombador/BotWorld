@@ -2,47 +2,48 @@ var timeLapse;
 var timestepStart;
 var timestepEnd;
 
-var engine = {
-    entities: [
+function Engine() {
+    this.entities = [
         new Player(-5, 0, "Ian"),
         new Terrain(0, 0, 5, 5),
         new Resource(1, 0, 50),
         new Resource(-3, 6, 10)
-    ],
-    resources: new Array(),
-    initEntities: function() {
-        var i;
-        var len = this.entities.length;
-        for (i = 0; i < len; i++) {
+    ];
+    this.resources = new Array();
+}
 
-            var obj = this.entities[i];
-            if (obj.type == "Player") {
-                this.player = obj;
-                obj.birth(this.world.scene);
-            } else if (obj.type == "Terrain") {
-                this.terrain = obj;
-                obj.arise(this.world.scene);
-            } else if (obj.type == "Resource") {
-                this.resources.push(obj);
-                obj.deposit(this.world.scene);
-            }
+Engine.prototype.initEntities = function(entities) {
+    this.entities = entities;
+    for (var i = 0, len = entities.length; i < len; i++) {
+        var obj = entities[i];
+        if (obj.type == "Player") {
+            this.player = obj;
+            obj.birth(this.world.scene);
+        } else if (obj.type == "Terrain") {
+            this.terrain = obj;
+            obj.arise(this.world.scene);
+        } else if (obj.type == "Resource") {
+            this.resources.push(obj);
+            obj.deposit(this.world.scene);
+        }
 
-        }
-    },
-    updateEntities: function() {
-        for (var i = 0, len = this.entities.length; i < len; i++) {
-            var obj = this.entities[i];
-            obj.step();
-            obj.updateBody();
-        }
-    },
-    run: function() {
-        timestepEnd = Date.now();
-        animate();
-    },
+    }
+}
+
+Engine.prototype.updateEntities = function() {
+    for (var i = 0, len = this.entities.length; i < len; i++) {
+        var obj = this.entities[i];
+        obj.step();
+        obj.updateBody();
+    }
+}
+
+Engine.prototype.run = function() {
+    timestepEnd = Date.now();
+    Engine.prototype.animate();
 };
 
-function initWorld() {
+Engine.prototype.initWorld = function () {
     var scene = new THREE.Scene();
 
     var sceneCenter = new THREE.Vector3(0, 0, 0);
@@ -62,16 +63,16 @@ function initWorld() {
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
-    var components = {};
-    components.scene = scene;
-    components.camera = camera;
-    components.renderer = renderer;
+    var world = {};
+    world.scene = scene;
+    world.camera = camera;
+    world.renderer = renderer;
 
-    return components;
+    this.world = world;
 }
 
-function animate() {
-    requestAnimationFrame(animate);
+Engine.prototype.animate = function() {
+    requestAnimationFrame(Engine.prototype.animate);
     
     timestepStart = timestepEnd;
     timestepEnd = Date.now();
