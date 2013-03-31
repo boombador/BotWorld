@@ -26,3 +26,12 @@ Entity.prototype.updateBody = function() {
 Entity.prototype.step = function() {
     return null;
 }
+
+Entity.prototype.decideMovement = function(engine, x, y) {
+    if (x != undefined && y != undefined) {
+        this.mx = x;
+        this.my = y;
+        return;
+    }
+    return;
+}

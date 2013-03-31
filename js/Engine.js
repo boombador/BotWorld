@@ -3,12 +3,7 @@ var timestepStart;
 var timestepEnd;
 
 function Engine() {
-    this.entities = [
-        new Player(-5, 0, "Ian"),
-        new Terrain(0, 0, 5, 5),
-        new Resource(1, 0, 50),
-        new Resource(-3, 6, 10)
-    ];
+    this.entities = null;
     this.resources = new Array();
 }
 
@@ -33,6 +28,7 @@ Engine.prototype.initEntities = function(entities) {
 Engine.prototype.updateEntities = function() {
     for (var i = 0, len = this.entities.length; i < len; i++) {
         var obj = this.entities[i];
+        obj.decideMovement(this);
         obj.step();
         obj.updateBody();
     }
@@ -80,4 +76,5 @@ Engine.prototype.animate = function() {
     
     engine.updateEntities();
     engine.world.renderer.render( engine.world.scene, engine.world.camera);
+    engine.player.decideMovement(engine);
 }

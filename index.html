@@ -18,13 +18,12 @@
                 new Player(-5, 0, "Ian"),
                 new Terrain(0, 0, 5, 5),
                 new Resource(1, 0, 50),
-                new Resource(-3, 6, 10),
+                new Resource(-3, 2, 10),
                 new Resource(3, 6, 10)
             ];
             var engine = new Engine();
             engine.initWorld();
             engine.initEntities(entities);
-            engine.player.moveTo(-3, 5);
             engine.run();
         </script>
     </body>
