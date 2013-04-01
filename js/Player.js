@@ -54,10 +54,18 @@ Player.prototype.decideMovement = function(engine, x, y) {
     }
     this.mx = engine.resources[closest].x;
     this.my = engine.resources[closest].y;
+    this.objective = closest;
 }
 
 Player.prototype.step = function(timelapse) {
-    if (this.flags.harvesting) return true;
+    if (this.flags.harvesting) {
+        this.heldResource = engine.resources[this.objective].harvest(this.maxResource);
+        if (this.heldResource == 0) {
+            engine.resources.splice(this.objective, 1);
+            this.flags.harvest = false;
+        }
+        return true;
+    }
 
     var dx = this.mx - this.x;
     var dy = this.my - this.y;

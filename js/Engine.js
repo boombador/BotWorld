@@ -11,6 +11,7 @@ Engine.prototype.initEntities = function(entities) {
     this.entities = entities;
     for (var i = 0, len = entities.length; i < len; i++) {
         var obj = entities[i];
+        obj.entityID = i;
         if (obj.type == "Player") {
             this.player = obj;
             obj.birth(this.world.scene);
@@ -21,7 +22,6 @@ Engine.prototype.initEntities = function(entities) {
             this.resources.push(obj);
             obj.deposit(this.world.scene);
         }
-
     }
 }
 

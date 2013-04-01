@@ -25,9 +25,10 @@ Resource.prototype.harvest = function(capacity) {
     } else {
         harvested = this.value;
         this.value = 0;
+        console.log("Resource depleted");
     }
-
-    // TODO: destroy resource block if emptied
-
+    if (this.value == 0) {
+        engine.resources.splice()
+    }
     return harvested;
 }
