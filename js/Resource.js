@@ -27,8 +27,11 @@ Resource.prototype.harvest = function(capacity) {
         this.value = 0;
         console.log("Resource depleted");
     }
-    if (this.value == 0) {
-        engine.resources.splice()
-    }
     return harvested;
+}
+
+Resource.prototype.updateBody = function() {
+    this.body.position.x = this.x;
+    this.body.position.y = this.y;
+    this.body.position.z = this.z;
 }

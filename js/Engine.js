@@ -11,7 +11,6 @@ Engine.prototype.initEntities = function(entities) {
     this.entities = entities;
     for (var i = 0, len = entities.length; i < len; i++) {
         var obj = entities[i];
-        obj.entityID = i;
         if (obj.type == "Player") {
             this.player = obj;
             obj.birth(this.world.scene);
@@ -28,9 +27,18 @@ Engine.prototype.initEntities = function(entities) {
 Engine.prototype.updateEntities = function() {
     for (var i = 0, len = this.entities.length; i < len; i++) {
         var obj = this.entities[i];
+        if (obj == null) continue;
         obj.decideMovement(this);
         obj.step();
         obj.updateBody();
+    }
+    // clean up the exhausted resources
+    for (var i = 0, len = this.resources.length; i < len; i++) {
+        var resource = this.resources[i];
+        if (resource != null && resource.value <= 0) {
+            this.world.scene.remove(resource);
+            this.resources[i] = null;
+        }
     }
 }
 
@@ -76,5 +84,4 @@ Engine.prototype.animate = function() {
     
     engine.updateEntities();
     engine.world.renderer.render( engine.world.scene, engine.world.camera);
-    engine.player.decideMovement(engine);
 }

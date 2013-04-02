@@ -7,7 +7,6 @@ function Entity(x, y) {
     this.body = null;
     this.geometry = null;
     this.material = null;
-    this.entityID = -1;
 }
 
 Entity.prototype.concept = function(geometry, material, scene) {

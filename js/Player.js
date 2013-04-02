@@ -42,8 +42,10 @@ Player.prototype.decideMovement = function(engine, x, y) {
     var closest = -1;
     var furthest = 10000000;
     for (var i = 0, len = engine.resources.length; i < len; i++) {
-        var xr = engine.resources[i].x;
-        var yr = engine.resources[i].y;
+        var resource = engine.resources[i];
+        if (resource == null) continue;
+        var xr = resource.x;
+        var yr = resource.y;
         var dx = xr - this.x;
         var dy = yr - this.y;
         var dist = Math.sqrt(dx*dx + dy*dy);
@@ -52,16 +54,26 @@ Player.prototype.decideMovement = function(engine, x, y) {
             closest = i;
         }
     }
-    this.mx = engine.resources[closest].x;
-    this.my = engine.resources[closest].y;
+    if (closest == -1) {
+        this.mx = 0;
+        this.my = 0;
+        return;
+    }
+    var resource = engine.resources[closest];
+    this.mx = resource.x;
+    this.my = resource.y;
     this.objective = closest;
 }
 
 Player.prototype.step = function(timelapse) {
     if (this.flags.harvesting) {
-        this.heldResource = engine.resources[this.objective].harvest(this.maxResource);
+        var resource = engine.resources[this.objective];
+        if (resource == null) {
+            this.flags.harvest = false;
+            return;
+        }
+        this.heldResource = resource.harvest(this.maxResource);
         if (this.heldResource == 0) {
-            engine.resources.splice(this.objective, 1);
             this.flags.harvest = false;
         }
         return true;
