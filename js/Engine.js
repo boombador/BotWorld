@@ -32,14 +32,6 @@ Engine.prototype.updateEntities = function() {
         obj.step();
         obj.updateBody();
     }
-    // clean up the exhausted resources
-    for (var i = 0, len = this.resources.length; i < len; i++) {
-        var resource = this.resources[i];
-        if (resource != null && resource.value <= 0) {
-            this.world.scene.remove(resource);
-            this.resources[i] = null;
-        }
-    }
 }
 
 Engine.prototype.run = function() {

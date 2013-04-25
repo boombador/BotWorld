@@ -43,7 +43,9 @@ Player.prototype.decideMovement = function(engine, x, y) {
     var furthest = 10000000;
     for (var i = 0, len = engine.resources.length; i < len; i++) {
         var resource = engine.resources[i];
-        if (resource == null) continue;
+        if (resource == null || resource.value == 0) {
+            continue;
+        }
         var xr = resource.x;
         var yr = resource.y;
         var dx = xr - this.x;
@@ -59,6 +61,9 @@ Player.prototype.decideMovement = function(engine, x, y) {
         this.my = 0;
         return;
     }
+    if (furthest < .5) {
+        this.flags.harvesting;
+    }
     var resource = engine.resources[closest];
     this.mx = resource.x;
     this.my = resource.y;
@@ -67,14 +72,20 @@ Player.prototype.decideMovement = function(engine, x, y) {
 
 Player.prototype.step = function(timelapse) {
     if (this.flags.harvesting) {
+        console.log("currently harvesting");
+        this.x = this.mx;
+        this.y = this.my;
         var resource = engine.resources[this.objective];
-        if (resource == null) {
-            this.flags.harvest = false;
+        if (resource == null || resource.value == 0) {
+            this.flags.harvesting = false;
+            console.log("finished harvesting");
             return;
         }
-        this.heldResource = resource.harvest(this.maxResource);
+        this.heldResource += resource.harvest(this.maxResource);
+        console.log(this.name + " just harvested " + this.heldResource + " at " + this.x + ", " + this.y);
         if (this.heldResource == 0) {
-            this.flags.harvest = false;
+            this.flags.harvesting = false;
+            console.log("finished harvesting second");
         }
         return true;
     }
@@ -82,15 +93,6 @@ Player.prototype.step = function(timelapse) {
     var dx = this.mx - this.x;
     var dy = this.my - this.y;
     var mag = Math.sqrt(dx*dx + dy*dy);
-
-    // return if already at 
-    if (mag <= .05) {
-        this.x = this.mx;
-        this.y = this.my;
-        this.flags.harvesting = true;
-        console.log("found resource at ("+this.x+", "+this.y+")");
-        return;
-    }
 
     this.vx = dx * this.speed / mag;
     this.vy = dy * this.speed / mag;

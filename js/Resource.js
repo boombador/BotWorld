@@ -16,12 +16,12 @@ Resource.prototype.deposit = function(scene, geometry, material) {
     return Entity.prototype.concept.call(this, geometry, material, scene);
 }
 
-/* returns amount of resources succesfully mined */
 Resource.prototype.harvest = function(capacity) {
+    if (debug) console.log("this resource is being harvested");
     var harvested = 0;
-    if (capacity < this.value) {
+    if (this.value > capacity) {
         harvested = capacity;
-        this.value -= capacity;
+        this.value -= harvested;
     } else {
         harvested = this.value;
         this.value = 0;
