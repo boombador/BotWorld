@@ -14,7 +14,7 @@
             var scene = new THREE.Scene();
             var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
             
-            var renderer = new THREE.WebGLRenderer();
+            var renderer = new THREE.CanvasRenderer();
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
             var geometry = new THREE.CubeGeometry(1,1,1);
@@ -22,13 +22,24 @@
             var cube = new THREE.Mesh( geometry, material );
             scene.add( cube );
             
-            camera.position.z = 5;
+            var origin = new THREE.Vector3( 0, 0, 0 );
+            var pos = new THREE.Vector3( 0, 0, 0 );
+            var dir = new THREE.Vector3( 0, 1, 0 );
+            var rot = 0;
+            var vel = new THREE.Vector3( 0, 0, 0 );
+
+            camera.position.z = 10;
+            camera.position.y = -5;
+            camera.lookAt(origin);
+
             function render() {
                 requestAnimationFrame(render);
                 if( keyboard.pressed("left") )   cube.position.x -= 0.1;
                 if( keyboard.pressed("right") )  cube.position.x += 0.1;
                 if( keyboard.pressed("up") )   cube.position.y += 0.1;
                 if( keyboard.pressed("down") )   cube.position.y -= 0.1;
+
+                if( keyboard.pressed("space") )   cube.rotation.z -= 0.1;
                 renderer.render(scene, camera);
             }
             render();
