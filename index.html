@@ -1,31 +1,37 @@
 <!doctype html>
 <html>
     <head>
-        <style src="style.css"></style>
+        <title>My first Three.js app</title>
+        <style>canvas { width: 100%; height: 100% }</style>
     </head>
-
     <body>
-        <script src="https://raw.github.com/mrdoob/three.js/master/build/three.js"></script>
-        <script src="js/Entity.js"></script>
-        <script src="js/Terrain.js"></script>
-        <script src="js/Player.js"></script>
-        <script src="js/Resource.js"></script>
-        <script src="js/Engine.js"></script>
+        <script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+        <script src='js/THREEx.KeyboardState.js'></script>
         <script>
-            var debug = true;
+            var keyboard = new THREEx.KeyboardState();
 
-            entities = [
-                new Player(-5, 0, "Ian"),
-                new Terrain(0, 0, 5, 5),
-                new Resource(1, 0, 50),
-                new Resource(-3, 6, 10),
-                new Resource(3, 6, 10)
-            ];
-            var engine = new Engine();
-            engine.initWorld();
-            engine.initEntities(entities);
-            engine.player.moveTo(-3, 5);
-            engine.run();
+            // Our Javascript will go here.
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+            
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            document.body.appendChild( renderer.domElement );
+            var geometry = new THREE.CubeGeometry(1,1,1);
+            var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+            var cube = new THREE.Mesh( geometry, material );
+            scene.add( cube );
+            
+            camera.position.z = 5;
+            function render() {
+                requestAnimationFrame(render);
+                if( keyboard.pressed("left") )   cube.position.x -= 0.1;
+                if( keyboard.pressed("right") )  cube.position.x += 0.1;
+                if( keyboard.pressed("up") )   cube.position.y += 0.1;
+                if( keyboard.pressed("down") )   cube.position.y -= 0.1;
+                renderer.render(scene, camera);
+            }
+            render();
         </script>
     </body>
 </html>
