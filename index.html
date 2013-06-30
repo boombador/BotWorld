@@ -2,44 +2,67 @@
 <html>
     <head>
         <title>My first Three.js app</title>
-        <style>canvas { width: 100%; height: 100% }</style>
+        <style>canvas { width: 99%; height: 99% }</style>
     </head>
     <body>
         <script src="js/Three.js"></script>
         <script src='js/THREEx.KeyboardState.js'></script>
         <script>
             var keyboard = new THREEx.KeyboardState();
+            var PI = 3.14159;
+            var origin = new THREE.Vector3( 0, 0, 0 );
+            var speed = .1;
+            var rot = 1.57079633;
+            var camRot = 0;
+            var mapRadius = 10;
 
-            // Our Javascript will go here.
             var scene = new THREE.Scene();
             var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-            
             var renderer = new THREE.CanvasRenderer();
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
-            var geometry = new THREE.CubeGeometry(1,1,1);
-            var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-            var cube = new THREE.Mesh( geometry, material );
-            scene.add( cube );
-            
-            var origin = new THREE.Vector3( 0, 0, 0 );
-            var pos = new THREE.Vector3( 0, 0, 0 );
-            var dir = new THREE.Vector3( 0, 1, 0 );
-            var rot = 0;
-            var vel = new THREE.Vector3( 0, 0, 0 );
 
-            camera.position.z = 10;
-            camera.position.y = -5;
-            camera.lookAt(origin);
+            var cubeGeometry = new THREE.CubeGeometry(1,1,1);
+            var green = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+            var cube = new THREE.Mesh( cubeGeometry, green );
+            scene.add( cube );
+
+
+            var red = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+            var cylinderGeometry = new THREE.CylinderGeometry( mapRadius, mapRadius, .5, 32, 10, true );
+            var wall = new THREE.Mesh( cylinderGeometry, red );
+            wall.material.side = THREE.DoubleSide; // might be seen from behind
+            scene.add( wall );
+
+            cube.rotation.y = rot;
+            camera.position.y = 10;
 
             function render() {
+                if (cube.position.length() > mapRadius) {
+                    return;
+                }
                 requestAnimationFrame(render);
-                if( keyboard.pressed("left") )   cube.position.x -= 0.1;
-                if( keyboard.pressed("right") )  cube.position.x += 0.1;
-                if( keyboard.pressed("up") )   cube.position.y += 0.1;
-                if( keyboard.pressed("down") )   cube.position.y -= 0.1;
+                var x = 10 * Math.cos(camRot);
+                var z = 10 * Math.sin(camRot);
+                camera.position.x = x;
+                camera.position.z = z;
+                camera.lookAt(origin);
 
-                if( keyboard.pressed("space") )   cube.rotation.z -= 0.1;
+                if( keyboard.pressed("left") ) {
+                    rot += .1;
+                    cube.rotation.y = rot;
+                }
+                if( keyboard.pressed("right") ) {
+                    rot -= .1;
+                    cube.rotation.y = rot;
+                }
+                if( keyboard.pressed("space") ) {
+                    var x = speed * Math.cos(rot);
+                    var z = speed * Math.sin(rot);
+                    cube.position.x += z;
+                    cube.position.z += x;
+                }
+
                 renderer.render(scene, camera);
             }
             render();
