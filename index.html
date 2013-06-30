@@ -6,6 +6,8 @@
     </head>
     <body>
         <script src="js/Three.js"></script>
+        <script src="js/Ship.js"></script>
+        <script src="js/Wall.js"></script>
         <script src='js/THREEx.KeyboardState.js'></script>
         <script>
             var keyboard = new THREEx.KeyboardState();
@@ -22,23 +24,20 @@
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
 
-            var cubeGeometry = new THREE.CubeGeometry(1,1,1);
-            var green = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-            var cube = new THREE.Mesh( cubeGeometry, green );
-            scene.add( cube );
+            var ship = new Ship();
+            var sbody = ship.body;
+            scene.add( sbody );
 
+            var wall = new Wall();
+            var wbody = wall.body;
+            scene.add( wbody );
 
-            var red = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
-            var cylinderGeometry = new THREE.CylinderGeometry( mapRadius, mapRadius, .5, 32, 10, true );
-            var wall = new THREE.Mesh( cylinderGeometry, red );
-            wall.material.side = THREE.DoubleSide; // might be seen from behind
-            scene.add( wall );
-
-            cube.rotation.y = rot;
+            sbody.rotation.y = rot;
             camera.position.y = 10;
 
             function render() {
-                if (cube.position.length() > mapRadius) {
+                if (sbody.position.length() > mapRadius) {
+                    renderer.render(scene, camera);
                     return;
                 }
                 requestAnimationFrame(render);
@@ -49,18 +48,13 @@
                 camera.lookAt(origin);
 
                 if( keyboard.pressed("left") ) {
-                    rot += .1;
-                    cube.rotation.y = rot;
+                    ship.yaw(.1);
                 }
                 if( keyboard.pressed("right") ) {
-                    rot -= .1;
-                    cube.rotation.y = rot;
+                    ship.yaw(-.1);
                 }
                 if( keyboard.pressed("space") ) {
-                    var x = speed * Math.cos(rot);
-                    var z = speed * Math.sin(rot);
-                    cube.position.x += z;
-                    cube.position.z += x;
+                    ship.thrust();
                 }
 
                 renderer.render(scene, camera);
