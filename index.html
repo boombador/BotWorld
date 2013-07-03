@@ -11,10 +11,7 @@
         <script src='js/THREEx.KeyboardState.js'></script>
         <script>
             var keyboard = new THREEx.KeyboardState();
-            var PI = 3.14159;
             var origin = new THREE.Vector3( 0, 0, 0 );
-            var speed = .1;
-            var rot = 1.57079633;
             var camRot = 0;
             var mapRadius = 10;
 
@@ -32,7 +29,6 @@
             var wbody = wall.body;
             scene.add( wbody );
 
-            sbody.rotation.y = rot;
             camera.position.y = 10;
 
             function render() {
@@ -48,14 +44,16 @@
                 camera.lookAt(origin);
 
                 if( keyboard.pressed("left") ) {
-                    ship.yaw(.1);
+                    ship.yaw(.01);
                 }
                 if( keyboard.pressed("right") ) {
-                    ship.yaw(-.1);
+                    ship.yaw(-.01);
                 }
                 if( keyboard.pressed("space") ) {
                     ship.thrust();
                 }
+
+                ship.step();
 
                 renderer.render(scene, camera);
             }
@@ -63,3 +61,4 @@
         </script>
     </body>
 </html>
+
