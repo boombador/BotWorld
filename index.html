@@ -21,6 +21,17 @@
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
 
+            var loader = new THREE.JSONLoader();
+            var createMesh = function( geometry )
+            {
+                var zmesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial() );
+                zmesh.position.set( 0, 0, 0 );
+                zmesh.scale.set( 3, 3, 3 );
+                zmesh.overdraw = true;
+                scene.add( zmesh );
+            };
+            loader.load( "viper.js", createMesh );
+
             var ship = new Ship();
             var sbody = ship.body;
             scene.add( sbody );
