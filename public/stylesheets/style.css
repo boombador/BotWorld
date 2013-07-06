@@ -7,8 +7,15 @@ canvas {
     width: 600px;
     height: 600px;
     margin: 0 auto;
+    float: left;
 }
 
 a {
   color: #00B7FF;
+}
+
+#sidenote {
+    float: left;
+    width: 200px;
+    margin: 0 10px;
 }
