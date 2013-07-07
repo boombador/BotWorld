@@ -16,6 +16,7 @@ var loader = new THREE.JSONLoader();
 var ship = new Ship();
 ship.init( loader, scene );
 
+var controls;
 var wall = new Wall();
 var wbody = wall.body;
 scene.add( wbody );
@@ -26,12 +27,21 @@ camera.position.z = 15;
 
 camera.lookAt(origin);
 
+var clock = new THREE.Clock(false);
 var state = 'loading';
+
 function render() {
     if (state == 'loading') {
         if (ship.loaded) {
+            controls = new THREE.FlyControls( ship.body );
+            controls.movementSpeed = 10;
+            controls.rollSpeed = Math.PI / 6;
+            controls.autoForward = false;
+            controls.dragToLook = false;
+
             state = 'main';
             console.log("game starting");
+            clock.start();
         }
     } else if (state == 'main') {
         if (ship.body.position.length() > mapRadius) {
@@ -49,7 +59,9 @@ function render() {
         if( keyboard.pressed("space") ) {
             ship.thrust();
         }
+        var delta = clock.getDelta();
         ship.step();
+        controls.update( delta );
     }
 
     requestAnimationFrame(render);
