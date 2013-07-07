@@ -49,18 +49,7 @@ function render() {
             console.log("You have died");
             return;
         }
-
-        if( keyboard.pressed("left") ) {
-            ship.rotate(up, .01);
-        }
-        if( keyboard.pressed("right") ) {
-            ship.rotate(up, -.01);
-        }
-        if( keyboard.pressed("space") ) {
-            ship.thrust();
-        }
         var delta = clock.getDelta();
-        ship.step();
         controls.update( delta );
     }
 

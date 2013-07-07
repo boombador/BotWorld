@@ -2,39 +2,10 @@
 function Ship() {
 
     this.maxSpeed = .2;
-    this.speed = 0;
-    this.thrustForce = .0001;
-    this.orientation = new THREE.Quaternion(1, 0, 0);
-    this.vel = new THREE.Vector3( 0, 0, 0 );
     this.loaded = false;
 
     return this;
 }
-
-Ship.prototype.thrust = function(){
-    var dv = new THREE.Vector3();
-    dv.setEulerFromQuaternion(this.orientation);
-    dv.multiplyScalar(this.thrustForce);
-    this.vel.add(dv);
-
-    var len = this.vel.length();
-    if (len > this.maxSpeed) {
-        this.vel.normalize();
-        this.vel.multiplyScalar(this.maxSpeed);
-    }
-};
-
-Ship.prototype.step = function(){
-    this.body.position.add(this.vel);
-};
-
-Ship.prototype.rotate = function( axis, rad ) {
-    var rotation = new THREE.Quaternion();
-    rotation.setFromAxisAngle( axis, rad );
-    this.orientation.multiply( rotation );
-    this.orientation.normalize();
-    this.body.rotation.setEulerFromQuaternion(this.orientation);
-};
 
 Ship.prototype.init = function( loader, scene ){
     this.scene = scene;

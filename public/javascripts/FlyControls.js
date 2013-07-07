@@ -2,8 +2,6 @@
  * @author James Baicoianu / http://www.baicoianu.com/
  */
 
-console.log("FlyControls.js loaded");
-
 THREE.FlyControls = function ( object, domElement ) {
 
 	this.object = object;
@@ -113,6 +111,7 @@ THREE.FlyControls = function ( object, domElement ) {
 
 	};
 
+    /*
 	this.mousedown = function( event ) {
 
 		if ( this.domElement !== document ) {
@@ -187,6 +186,7 @@ THREE.FlyControls = function ( object, domElement ) {
 		this.updateRotationVector();
 
 	};
+    */
 
 	this.update = function( delta ) {
 
