@@ -8,7 +8,7 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, 600 / 600, 0.1, 1000 );
 // var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 // var renderer = new THREE.CanvasRenderer();
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({ clearColor: 0x000000, clearAlpha: 1 });
 renderer.setSize( 600, 600 );
 document.body.appendChild( renderer.domElement );
 
