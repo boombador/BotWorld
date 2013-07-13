@@ -29,6 +29,25 @@ camera.lookAt(origin);
 
 var clock = new THREE.Clock(false);
 var state = 'loading';
+var particles = [];
+
+function generateAsteroids() {
+    var particle, material; 
+    for ( var i= 0; i < 10; i++ ) {
+        var geoSphere = new THREE.SphereGeometry( .3, 24, 24);
+        var matSphere = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        particle = new THREE.Mesh( geoSphere, matSphere );
+ 
+        // give it a random x and y position between -500 and 500
+        particle.position.x =  Math.random() * 15 - 7.5;
+        particle.position.y =  Math.random() * 15 - 7.5;
+        particle.position.z =  Math.random() * 15 - 7.5;
+ 
+        scene.add( particle );
+        particles.push(particle); 
+    }
+}
+generateAsteroids();
 
 function render() {
     if (state == 'loading') {
