@@ -2,15 +2,17 @@ doctype 5
 html
   head
     title= title
+    link(rel='stylesheet', href='/stylesheets/reset.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
   #header
-    a(href="/")
-      h1#title= title
+    a(href="/", class="navLink", id="title")
+      h1= title
     a(href="https://github.com/boombador/BotWorld", class="navLink") Github
     a(href="/news", class="navLink") News
     div(style="clear: both;")
   #content
     block content
+
   #footer
     block scripts

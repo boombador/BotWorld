@@ -9,11 +9,12 @@ block scripts
   script(type='text/javascript', src='/javascripts/main.js')
 
 block content
-  div Controls
-    ul(class="controls")
-      li WASD : move
-      li R|F : up | down
-      li Q|E : roll
-      li up|down : pitch
-      li left|right : yaw
+  #controls
+    div(class="label") Controls
+    ul
+      li <b>WASD</b> : move
+      li <b>R|F</b> : up | down
+      li <b>Q|E</b> : roll
+      li <b>up|down</b> : pitch
+      li <b>left|right</b> : yaw
   canvas#viewport

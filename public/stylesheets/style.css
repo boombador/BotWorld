@@ -3,6 +3,7 @@ body {
   margin: 0 auto;
   width: 960px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+background-color: #eeeeee;
 }
 
 canvas {
@@ -11,19 +12,14 @@ canvas {
     margin: 0 auto;
 }
 
+#title {
+    float: left;
+}
+
+/* navigation */
+
 a {
-  color: #00B7FF;
-}
-
-#sidenote {
-    float: left;
-    width: 200px;
-    margin: 0 10px;
-}
-
-h1 {
-    font-size: 36px;
-    float: left;
+  color: #666666;
 }
 .navLink {
     font-size: 36px;
@@ -36,11 +32,21 @@ h1 {
     color: #FF7F00;
 }
 
-.controls li {
+/* styles for control block */
+#controls .label {
     float: left;
-    padding-right: 30px;
+    margin: 15px 0;
+    padding: 0 10px;
+}
+#controls ul {
+    list-style: none;
+    float: left;
+    margin: 15px 0;
+    padding: 0 10px;
+}
+#controls li {
+    float: left;
+    padding-right: 40px;
 }
 
-#title {
-    float: left;
-}
+
