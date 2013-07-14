@@ -17,7 +17,7 @@ Ship.prototype.init = function( loader, scene ){
 
 Ship.prototype.loadMesh = function( geometry ) {
     this.geoBody = geometry;
-    this.matBody = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    this.matBody = new THREE.MeshNormalMaterial();
     this.body = new THREE.Mesh( this.geoBody, this.matBody );
 
     this.body.scale.set( .4, .4, .4 );

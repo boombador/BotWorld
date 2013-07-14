@@ -29,29 +29,26 @@ camera.lookAt(origin);
 
 var clock = new THREE.Clock(false);
 var state = 'loading';
-var particles = [];
+var asteroids = [];
 
 var w = 200;
 var hw = w / 2;
 
-var matPhong = new THREE.MeshPhongMaterial( { ambient: 0x050505, color: 0x000000, specular: 0x555555, shininess: 30 } ) ;
-var matLambert = new THREE.MeshLambertMaterial( { color: 0x050505 } );
-
 function generateAsteroids() {
-    var particle, material; 
+    var asteroid; 
+    var mat = new THREE.MeshPhongMaterial({ specular: '#666666', color: '#666666', emissive: '#666666', shininess: 2 });
     for ( var i= 0; i < 10; i++ ) {
         var r = Math.random() * 20 + 10;
         var geoSphere = new THREE.SphereGeometry( r, 24, 24);
-        var matSphere = new THREE.MeshBasicMaterial({ color: 0x777777 });
-        particle = new THREE.Mesh( geoSphere, matSphere );
+        asteroid = new THREE.Mesh( geoSphere, mat );
  
         // give it a random x and y position between -500 and 500
-        particle.position.x =  Math.random() * w - hw;
-        particle.position.y =  Math.random() * w - hw;
-        particle.position.z =  Math.random() * w - hw;
+        asteroid.position.x =  Math.random() * w - hw;
+        asteroid.position.y =  Math.random() * w - hw;
+        asteroid.position.z =  Math.random() * w - hw;
  
-        scene.add( particle );
-        particles.push(particle); 
+        scene.add( asteroid );
+        asteroids.push(asteroid); 
     }
 }
 generateAsteroids();
