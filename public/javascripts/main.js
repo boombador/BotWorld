@@ -21,9 +21,9 @@ var wall = new Wall();
 var wbody = wall.body;
 scene.add( wbody );
 
-camera.position.y = 10;
+camera.position.y = 0;
 camera.position.x = 0;
-camera.position.z = 15;
+camera.position.z = 0;
 
 camera.lookAt(origin);
 
@@ -52,7 +52,7 @@ generateAsteroids();
 function render() {
     if (state == 'loading') {
         if (ship.loaded) {
-            controls = new THREE.FlyControls( ship.body );
+            controls = new THREE.FlyControls( camera );
             controls.movementSpeed = 10;
             controls.rollSpeed = Math.PI / 6;
             controls.autoForward = false;

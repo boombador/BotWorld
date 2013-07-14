@@ -21,8 +21,7 @@ Ship.prototype.loadMesh = function( geometry ) {
     this.body = new THREE.Mesh( this.geoBody, this.matBody );
 
     this.body.scale.set( .4, .4, .4 );
-    this.body.position.set( 0, 0, 0 );
-    this.body.rotation.set( 0, 0, 1 );
+    this.body.position.set( 0, 10, 0 );
     this.body.overdraw = true;
 
     this.scene.add(this.body);
