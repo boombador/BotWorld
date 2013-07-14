@@ -4,12 +4,16 @@ var up = new THREE.Vector3( 0, 1, 0 );
 var camRot = 0;
 var mapRadius = 10;
 
+var canv = document.getElementById("viewport");
+var viewWidth = 1024;
+var viewHeight = 1024;
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, 600 / 600, 0.1, 1000 );
+var camera = new THREE.PerspectiveCamera( 60, viewWidth / viewHeight, 0.1, 1000 );
 // var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 // var renderer = new THREE.CanvasRenderer();
-var renderer = new THREE.WebGLRenderer({ clearColor: 0x000000, clearAlpha: 1 });
-renderer.setSize( 600, 600 );
+var renderer = new THREE.WebGLRenderer({ canvas: canv });
+renderer.setClearColor( 0x000000 )
+renderer.setSize( 1024, 768 );
 document.body.appendChild( renderer.domElement );
 
 var loader = new THREE.JSONLoader();

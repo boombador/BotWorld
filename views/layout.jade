@@ -3,9 +3,14 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(type='text/javascript', src='/javascripts/ThreeDebug.js')
-    script(type='text/javascript', src='/javascripts/Ship.js')
-    script(type='text/javascript', src='/javascripts/Wall.js')
-    script(type='text/javascript', src='/javascripts/THREEx.KeyboardState.js')
   body
+  #header
+    a(href="/")
+      h1#title= title
+    a(href="https://github.com/boombador/BotWorld", class="navLink") Github
+    a(href="/news", class="navLink") News
+    div(style="clear: both;")
+  #content
     block content
+  #footer
+    block scripts

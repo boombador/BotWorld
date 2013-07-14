@@ -1,18 +1,19 @@
 extends layout
 
-block content
-  h1= title
+block scripts
+  script(type='text/javascript', src='/javascripts/ThreeDebug.js')
+  script(type='text/javascript', src='/javascripts/Ship.js')
+  script(type='text/javascript', src='/javascripts/Wall.js')
+  script(type='text/javascript', src='/javascripts/THREEx.KeyboardState.js')
   script(type='text/javascript', src='/javascripts/FlyControls.js')
   script(type='text/javascript', src='/javascripts/main.js')
-  #sidenote
-    p Controls
-      ul
-        li WASD : move
-        li R|F : up | down
-        li Q|E : roll
-        li up|down : pitch
-        li left|right : yaw
-    p See the project on 
-      a(href="https://github.com/boombador/BotWorld") Github
-    p Current Feature In Progress : redo physics, move flight control logic into ship code
-    p Recent achievement : now in first person
+
+block content
+  div Controls
+    ul(class="controls")
+      li WASD : move
+      li R|F : up | down
+      li Q|E : roll
+      li up|down : pitch
+      li left|right : yaw
+  canvas#viewport

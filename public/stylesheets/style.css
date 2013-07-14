@@ -6,10 +6,9 @@ body {
 }
 
 canvas {
-    width: 600px;
-    height: 600px;
+    width: 1024px;
+    height: 768px;
     margin: 0 auto;
-    float: left;
 }
 
 a {
@@ -20,4 +19,28 @@ a {
     float: left;
     width: 200px;
     margin: 0 10px;
+}
+
+h1 {
+    font-size: 36px;
+    float: left;
+}
+.navLink {
+    font-size: 36px;
+    float: right;
+    padding: 20px 0 20px 10px;
+    text-decoration: none;
+}
+
+.navLink:hover {
+    color: #FF7F00;
+}
+
+.controls li {
+    float: left;
+    padding-right: 30px;
+}
+
+#title {
+    float: left;
 }
