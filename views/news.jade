@@ -2,5 +2,17 @@ extends layout
 
 block content
   #content
-    p Current Feature In Progress : redo physics, move flight control logic into ship code
-    p Recent achievement : now in first person
+    #todo
+      div.title Desired Features
+        p Refactor movement code into ship module
+        p reimplement basic physics (mostly inertia, also acceleration)
+        p better material for asteroids
+        p collision detection with asteroids
+        p something to collect
+        p shooting lasers (or cubes to start)
+        p basic enemy
+        p browser persistent state: html5 local storage
+        p very persistent state: try out mongodb or postgresql
+    #progress
+      div.title Milestones
+        p Recent achievement : now in first person, starting to feel like a game
