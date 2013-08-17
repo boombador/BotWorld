@@ -5,16 +5,14 @@ var camRot = 0;
 var mapRadius = 10;
 
 var canv = document.getElementById("viewport");
-var viewWidth = 1024;
-var viewHeight = 1024;
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 60, viewWidth / viewHeight, 0.1, 1000 );
-// var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-// var renderer = new THREE.CanvasRenderer();
+var camera = new THREE.PerspectiveCamera( 60, 1, 0.1, 1000 );
 var renderer = new THREE.WebGLRenderer({ canvas: canv });
+
 renderer.setClearColor( 0x000000 )
-renderer.setSize( 1024, 768 );
 document.body.appendChild( renderer.domElement );
+resize( null, "medium" );
+
 
 var loader = new THREE.JSONLoader();
 var ship = new Ship();
@@ -37,6 +35,24 @@ var asteroids = [];
 
 var w = 200;
 var hw = w / 2;
+
+function resize( button, size ) {
+    if ( typeof size === "undefined" ) size = button.dataset[ "size" ];
+    var width = 0, height = 0;
+    if (size == "small") {
+        width = 540;
+        height = 405;
+    } else if (size == "medium") {
+        width = 720;
+        height = 520;
+    } else if (size == "large") {
+        width = 960;
+        height = 720;
+    }
+    canv.style.marginLeft = (960 - width) / 2 + "px";
+    renderer.setSize( width, height );
+    camera.aspect = width / height;
+}
 
 function generateAsteroids() {
     var asteroid; 
