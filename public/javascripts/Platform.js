@@ -1,4 +1,4 @@
-function Wall(radius) {
+function Platform(radius) {
     var height = 1;
     this.geoBody = new THREE.CylinderGeometry( radius, 1, 1, 32, 10, false );
     this.matBody = new THREE.MeshNormalMaterial();

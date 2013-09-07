@@ -19,9 +19,9 @@ var ship = new Ship();
 ship.init( loader, scene );
 
 var controls;
-var wall = new Wall();
-var wbody = wall.body;
-scene.add( wbody );
+var platform = new Platform();
+var pbody = platform.body;
+scene.add( pbody );
 
 camera.position.y = 0;
 camera.position.x = 0;
@@ -76,7 +76,7 @@ generateAsteroids();
 function render() {
     if (state == 'loading') {
         if (ship.loaded) {
-            controls = new THREE.FlyControls( camera );
+            controls = new THREE.GravControls( camera );
             controls.movementSpeed = 10;
             controls.rollSpeed = Math.PI / 6;
             controls.autoForward = false;

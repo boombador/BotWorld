@@ -1,6 +1,5 @@
 
 function Ship() {
-
     this.maxSpeed = .2;
     this.loaded = false;
 
