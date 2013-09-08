@@ -2,10 +2,11 @@
 /* GravControls
  * heavily based off FlyControls by James Baicoianu / http://www.baicoianu.com/
  */
-THREE.GravControls = function ( object ) {
+THREE.GravControls = function ( entity ) {
 
     this.keyboard = new THREEx.KeyboardState();
-    this.object = object;
+    this.entity = entity;
+    this.object = entity.body;
     this.object.position.set( 0, 0, 0 );
 	this.object.useQuaternion = true;
     this.accLinear = .5;
@@ -85,10 +86,30 @@ THREE.GravControls.prototype = {
         };
     }(),
 
+    commandScan: function() {
+        var fireShot = this.keyboard.pressed( "space" ) ? 1 : 0;
+
+        var t, c;
+
+        if (fireShot) {
+            t = 'projectile';
+            c = this.entity.fireLaser();
+        } else {
+            t = 'none';
+            c = null;
+        }
+        return {
+            type: t,
+            content: c
+        };
+    },
+
     update: function( delta ) {
         // update ship
         this.translate( delta );
         this.rotate( delta );
+
+        return this.commandScan();
     }
 };
 

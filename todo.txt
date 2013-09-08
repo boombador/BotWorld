@@ -1,7 +1,12 @@
 
 // projectiles
+// follow behind camera mode
 // persistent storage (mongodb ?)
     // load file from json
 // HUD for directions
 // multiplayer
-
+// sound (main thrust, rotations, points)
+// star field background
+// button mappings, 2 layers
+    // <ctrl> -> fire
+    // fire -> game logic

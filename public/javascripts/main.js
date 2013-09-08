@@ -11,12 +11,14 @@ engine = {
 
     state: 'loading',
     asteroids: [],
+    projectiles: [],
     controls: null,
+    cameraFollow: null,
+    followDist: 4,
 
     resize: function( button, size ) {
         if ( typeof size === "undefined" ) size = button.dataset[ "size" ];
         var width = 0, height = 0;
-        size = 'large';
         if (size == "small") {
             width = 540;
             height = 405;
@@ -62,7 +64,7 @@ engine = {
     handleState: function () {
         if (this.state == 'loading') {
             if (this.ship.loaded) {
-                this.controls = new THREE.GravControls( this.camera );
+                this.controls = new THREE.GravControls( this.ship );
                 this.controls.movementSpeed = 10;
                 this.controls.rollSpeed = Math.PI / 6;
                 this.controls.autoForward = false;
@@ -73,15 +75,20 @@ engine = {
                 this.clock.start();
             }
         } else if (this.state == 'main') {
-            if (this.ship.body.position.length() > this.mapRadius) {
-                this.renderer.render(this.scene, this.camera);
-                console.log("You have died");
-                return;
-            }
-            this.detectCollisions();
             var delta = this.clock.getDelta();
-            this.controls.update( delta );
+            var msg = this.controls.update( delta );
+            if (msg.type == 'projectile') {
+                this.projectiles.push( msg.content );
+                this.scene.add( msg.content.body );
+            }
+            this.updateCamera();
+            this.detectCollisions();
         }
+    },
+
+    updateCamera: function() {
+        this.camera.position.copy( this.cameraFollow.body.position );
+        this.camera.rotation.copy( this.cameraFollow.body.rotation );
     },
 
     detectCollisions: function () {
@@ -105,17 +112,18 @@ engine = {
         this.canv = document.getElementById("viewport");
         this.renderer = new THREE.WebGLRenderer({ canvas: this.canv });
         this.renderer.setClearColor( 0x000000 );
-        this.resize( null, "medium" );
+        this.resize( null, "large" );
     },
 
     initWorld: function() {
         this.ship = new Ship("eman");
-        this.mapRadius = 10;
         this.ship.init( this.loader, this.scene );
 
         this.platform = new Platform();
-        // this.scene.add( this.platform.body );
         this.generateAsteroids();
+
+        this.cameraFollow = this.ship;
+        // this.scene.add( this.platform.body );
     }
 }
 
