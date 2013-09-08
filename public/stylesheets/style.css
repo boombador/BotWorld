@@ -3,7 +3,7 @@ body {
   margin: 0 auto;
   width: 960px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #eeeeee;
+  background-color: #222;
 }
 
 #title {
@@ -13,7 +13,7 @@ body {
 /* navigation */
 
 a {
-  color: #666666;
+  color: #ddd;
 }
 .navLink {
     font-size: 36px;
@@ -31,6 +31,7 @@ a {
     float: left;
     margin: 15px 0;
     padding: 0 10px;
+    color: #ccc;
 }
 #controls ul {
     list-style: none;
@@ -41,6 +42,7 @@ a {
 #controls li {
     float: left;
     padding-right: 40px;
+    color: #ccc;
 }
 
 

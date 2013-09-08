@@ -1,7 +1,9 @@
 
-function Ship() {
+function Ship(handle) {
+    this.handle = handle;
     this.maxSpeed = .2;
     this.loaded = false;
+    this.mat = new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, wireframe: true } );
 
     return this;
 }

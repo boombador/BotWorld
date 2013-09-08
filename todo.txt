@@ -1,0 +1,7 @@
+
+// projectiles
+// persistent storage (mongodb ?)
+    // load file from json
+// HUD for directions
+// multiplayer
+

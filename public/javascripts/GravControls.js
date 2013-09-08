@@ -4,7 +4,9 @@
  */
 THREE.GravControls = function ( object ) {
 
+    this.keyboard = new THREEx.KeyboardState();
     this.object = object;
+    this.object.position.set( 0, 0, 0 );
 	this.object.useQuaternion = true;
     this.accLinear = .5;
     this.accAngular = Math.PI / 3;
@@ -29,12 +31,12 @@ THREE.GravControls.prototype = {
         };
         return function ( delta ) {
             var rotMult = delta * this.accAngular;
-            angularThrust.pitchUp = keyboard.pressed( "up" ) ? 1 : 0;
-            angularThrust.pitchDown = keyboard.pressed( "down" ) ? 1 : 0;
-            angularThrust.yawLeft = keyboard.pressed( "left" ) ? 1 : 0;
-            angularThrust.yawRight = keyboard.pressed( "right" ) ? 1 : 0;
-            angularThrust.rollLeft = keyboard.pressed( "q" ) ? 1 : 0;
-            angularThrust.rollRight = keyboard.pressed( "e" ) ? 1 : 0;
+            angularThrust.pitchUp = this.keyboard.pressed( "up" ) ? 1 : 0;
+            angularThrust.pitchDown = this.keyboard.pressed( "down" ) ? 1 : 0;
+            angularThrust.yawLeft = this.keyboard.pressed( "left" ) ? 1 : 0;
+            angularThrust.yawRight = this.keyboard.pressed( "right" ) ? 1 : 0;
+            angularThrust.rollLeft = this.keyboard.pressed( "q" ) ? 1 : 0;
+            angularThrust.rollRight = this.keyboard.pressed( "e" ) ? 1 : 0;
 
             this.rotationVector.x = ( -angularThrust.pitchDown + angularThrust.pitchUp );
             this.rotationVector.y = ( -angularThrust.yawRight  + angularThrust.yawLeft );
@@ -61,12 +63,12 @@ THREE.GravControls.prototype = {
         };
         return function ( delta ) {
             var moveMult = delta * this.accLinear;
-            thrust.forward = keyboard.pressed( "w" ) ? 1 : 0;
-            thrust.back = keyboard.pressed( "s" ) ? 1 : 0;
-            thrust.left = keyboard.pressed( "a" ) ? 1 : 0;
-            thrust.right = keyboard.pressed( "d" ) ? 1 : 0;
-            thrust.up = keyboard.pressed( "r" ) ? 1 : 0;
-            thrust.down = keyboard.pressed( "f" ) ? 1 : 0;
+            thrust.forward = this.keyboard.pressed( "w" ) ? 1 : 0;
+            thrust.back = this.keyboard.pressed( "s" ) ? 1 : 0;
+            thrust.left = this.keyboard.pressed( "a" ) ? 1 : 0;
+            thrust.right = this.keyboard.pressed( "d" ) ? 1 : 0;
+            thrust.up = this.keyboard.pressed( "r" ) ? 1 : 0;
+            thrust.down = this.keyboard.pressed( "f" ) ? 1 : 0;
 
             var forward = (
                     thrust.forward || ( this.autoForward && !thrust.back )
