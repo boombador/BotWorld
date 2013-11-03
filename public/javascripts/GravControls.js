@@ -2,114 +2,48 @@
 /* GravControls
  * heavily based off FlyControls by James Baicoianu / http://www.baicoianu.com/
  */
-THREE.GravControls = function ( entity ) {
 
-    this.keyboard = new THREEx.KeyboardState();
-    this.entity = entity;
-    this.object = entity.body;
-    this.object.position.set( 0, 0, 0 );
-	this.object.useQuaternion = true;
-    this.accLinear = .5;
-    this.accAngular = Math.PI / 3;
-	this.dragToLook = false;
-	this.autoForward = false;
+var gravControls = function( spec ) {
+    var that = {};
 
-	this.tmpQuaternion = new THREE.Quaternion();
-	this.moveVector = new THREE.Vector3( 0, 0, 0 );
-	this.rotationVector = new THREE.Vector3( 0, 0, 0 );
-    this.vel = new THREE.Vector3( 0, 0, 0 );
-};
+    that.keyboard = new THREEx.KeyboardState();
 
-THREE.GravControls.prototype = {
+    that.entity = spec.entity;
+    that.mesh = spec.entity.mesh;
 
-    constructor: THREE.GravControls,
+    that.dragToLook = false;
+    that.autoForward = false;
 
-    rotate: function() {
-        var angularThrust = {
-            pitchUp: 0, pitchDown: 0,
-            yawLeft: 0, yawRight: 0,
-            rollLeft: 0, rollRight: 0
-        };
-        return function ( delta ) {
-            var rotMult = delta * this.accAngular;
-            angularThrust.pitchUp = this.keyboard.pressed( "up" ) ? 1 : 0;
-            angularThrust.pitchDown = this.keyboard.pressed( "down" ) ? 1 : 0;
-            angularThrust.yawLeft = this.keyboard.pressed( "left" ) ? 1 : 0;
-            angularThrust.yawRight = this.keyboard.pressed( "right" ) ? 1 : 0;
-            angularThrust.rollLeft = this.keyboard.pressed( "q" ) ? 1 : 0;
-            angularThrust.rollRight = this.keyboard.pressed( "e" ) ? 1 : 0;
+    that.movementSpeed = spec.movementSpeed || 10;
+    that.rollSpeed = spec.rollSpeed || Math.PI / 6;
+    that.autoForward = spec.autoForward || false;
+    that.dragToLook = spec.dragToLook || false;
+    that.map = { space: "fireLaser" };
 
-            this.rotationVector.x = ( -angularThrust.pitchDown + angularThrust.pitchUp );
-            this.rotationVector.y = ( -angularThrust.yawRight  + angularThrust.yawLeft );
-            this.rotationVector.z = ( -angularThrust.rollRight + angularThrust.rollLeft );
-
-            // perform update
-            this.tmpQuaternion.set(
-                    this.rotationVector.x * rotMult,
-                    this.rotationVector.y * rotMult,
-                    this.rotationVector.z * rotMult, 1
-                    ).normalize();
-            this.object.quaternion.multiply( this.tmpQuaternion );
-
-            // expose the rotation vector for convenience
-            this.object.rotation.setEulerFromQuaternion( this.object.quaternion, this.object.eulerOrder );
-        };
-
-    }(),
-
-    translate: function() {
-        var dv = new THREE.Vector3();
-        var thrust = {
-            up: 0, down: 0, left: 0, right: 0, forward: 0, back: 0,
-        };
-        return function ( delta ) {
-            var moveMult = delta * this.accLinear;
-            thrust.forward = this.keyboard.pressed( "w" ) ? 1 : 0;
-            thrust.back = this.keyboard.pressed( "s" ) ? 1 : 0;
-            thrust.left = this.keyboard.pressed( "a" ) ? 1 : 0;
-            thrust.right = this.keyboard.pressed( "d" ) ? 1 : 0;
-            thrust.up = this.keyboard.pressed( "r" ) ? 1 : 0;
-            thrust.down = this.keyboard.pressed( "f" ) ? 1 : 0;
-
-            var forward = (
-                    thrust.forward || ( this.autoForward && !thrust.back )
-                    ) ? 1 : 0;
-            this.moveVector.x = ( -thrust.left    + thrust.right );
-            this.moveVector.y = ( -thrust.down    + thrust.up );
-            this.moveVector.z = ( -forward + thrust.back );
-
-            dv.copy( this.moveVector );
-            dv.applyQuaternion( this.object.quaternion );
-            dv.multiplyScalar( moveMult );
-            this.vel.add( dv );
-            this.object.position.add( this.vel );
-        };
-    }(),
-
-    commandScan: function() {
-        var fireShot = this.keyboard.pressed( "space" ) ? 1 : 0;
-
-        var t, c;
-
-        if (fireShot) {
-            t = 'projectile';
-            c = this.entity.fireLaser();
-        } else {
-            t = 'none';
-            c = null;
+    that.commandScan = function() {
+        that.entity.msg = { type: 'none' };
+        for (key in that.map) {
+            if (that.keyboard.pressed( key ) ? 1 : 0) {
+                that.entity.msg.type = 'command';
+                that.entity.msg.value = that.map[key];
+            }
         }
-        return {
-            type: t,
-            content: c
-        };
-    },
 
-    update: function( delta ) {
-        // update ship
-        this.translate( delta );
-        this.rotate( delta );
+        that.entity.thrust.forward = that.keyboard.pressed( "w" ) ? 1 : 0;
+        that.entity.thrust.back = that.keyboard.pressed( "s" ) ? 1 : 0;
+        that.entity.thrust.left = that.keyboard.pressed( "a" ) ? 1 : 0;
+        that.entity.thrust.right = that.keyboard.pressed( "d" ) ? 1 : 0;
+        that.entity.thrust.up = that.keyboard.pressed( "r" ) ? 1 : 0;
+        that.entity.thrust.down = that.keyboard.pressed( "f" ) ? 1 : 0;
 
-        return this.commandScan();
-    }
+        that.entity.angularThrust.pitchUp = that.keyboard.pressed( "up" ) ? 1 : 0;
+        that.entity.angularThrust.pitchDown = that.keyboard.pressed( "down" ) ? 1 : 0;
+        that.entity.angularThrust.yawLeft = that.keyboard.pressed( "left" ) ? 1 : 0;
+        that.entity.angularThrust.yawRight = that.keyboard.pressed( "right" ) ? 1 : 0;
+        that.entity.angularThrust.rollLeft = that.keyboard.pressed( "q" ) ? 1 : 0;
+        that.entity.angularThrust.rollRight = that.keyboard.pressed( "e" ) ? 1 : 0;
+    };
+
+    return that;
 };
 
