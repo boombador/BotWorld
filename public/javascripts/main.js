@@ -61,6 +61,14 @@ engine = {
         }
     },
 
+    updateProjectiles: function( delta ) {
+        for (var i = 0; i < this.projectiles.length; i++) {
+            var proj = this.projectiles[i];
+            var ds = proj.velocity.clone().multiplyScalar( delta );
+            proj.body.position.add( ds );
+        }
+    },
+
     handleState: function () {
         if (this.state == 'loading') {
             if (this.ship.loaded) {
@@ -77,10 +85,11 @@ engine = {
         } else if (this.state == 'main') {
             var delta = this.clock.getDelta();
             var msg = this.controls.update( delta );
-            if (msg.type == 'projectile') {
+            if (msg.type == 'newProjectile') {
                 this.projectiles.push( msg.content );
                 this.scene.add( msg.content.body );
             }
+            this.updateProjectiles( delta );
             this.updateCamera();
             this.detectCollisions();
         }

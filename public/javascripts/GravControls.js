@@ -88,20 +88,10 @@ THREE.GravControls.prototype = {
 
     commandScan: function() {
         var fireShot = this.keyboard.pressed( "space" ) ? 1 : 0;
-
-        var t, c;
-
-        if (fireShot) {
-            t = 'projectile';
-            c = this.entity.fireLaser();
-        } else {
-            t = 'none';
-            c = null;
-        }
-        return {
-            type: t,
-            content: c
-        };
+        var update;
+        if (fireShot) update = this.entity.fireLaser( this.object.quaternion, this.object.eulerOrder );
+        else update = { type: 'none' };
+        return update;
     },
 
     update: function( delta ) {

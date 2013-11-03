@@ -30,19 +30,23 @@ Ship.prototype.loadMesh = function( geometry ) {
     console.log("Ship loaded");
 };
 
-Ship.prototype.fireLaser = function () {
+Ship.prototype.fireLaser = function ( quat, euler ) {
 
     var laserGeo = new THREE.CubeGeometry(1,1,1); // a cube of side length one
     var green = new THREE.MeshBasicMaterial( { color: 0x00ff00 } ); // a simple green material
     var laser = new THREE.Mesh( laserGeo, green );
     laser.position.copy( this.body.position );
+    var vel = new THREE.Vector3();
+    // vel.copy( this.body.rotation ).normalize().multiplyScalar( 3 );
+    vel.setEulerFromQuaternion( quat, euler );
+    vel.normalize().multiplyScalar( 10 );
 
-    debugger;
     return {
-        dir: this.body.rotation.clone(),
-        pos: this.body.position.clone(),
-        spd: 5,
-        body: laser
-    }
+        type: 'newProjectile',
+        content: {
+            body: laser,
+            velocity: vel
+        }
+    };
 };
 
