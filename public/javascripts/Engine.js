@@ -21,7 +21,7 @@ var engine = function(spec) {
     that.resize = function( button, size ) {
         if ( typeof size === "undefined" ) size = button.dataset[ "size" ];
         var width = 0, height = 0;
-        size = "small";
+        // size = "small";
         if (size == "small") {
             width = 540;
             height = 405;
@@ -68,8 +68,6 @@ var engine = function(spec) {
         for (var i = 0; i < that.projectiles.length; i++) {
             var proj = that.projectiles[i];
             proj.update( delta );
-            //var ds = proj.vel.clone().multiplyScalar( delta );
-            //proj.mesh.position.add( ds );
         }
     };
 

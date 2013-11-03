@@ -56,7 +56,7 @@ var physEntity = function(spec, my) {
 
     that.translate = function() {
         var dv = new THREE.Vector3();
-        return function ( delta, thrust ) {
+        return function ( delta ) {
             var moveMult = delta * that.accLinear;
             thrust = that.thrust;
 

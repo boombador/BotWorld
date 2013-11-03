@@ -12,7 +12,7 @@ var ship = function(spec)  {
         var quat = that.mesh.quaternion;
         var euler = that.mesh.eulerOrder;
 
-        var laserObj = projectile({ vel: that.vel });
+        var laserObj = projectile({ vel: that.mesh.rotation.clone().normalize() });
         laserObj.mesh.position.copy( that.mesh.position );
 
         that.engine.projectiles.push( laserObj );
