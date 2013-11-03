@@ -8,24 +8,9 @@ var ship = function(spec)  {
             thine.loadMesh(geometry);
         });
     };
+
     return that;
 };
-
-/*
-Ship.prototype.loadMesh = function( geometry ) {
-    this.geoBody = geometry;
-    this.matBody = new THREE.MeshNormalMaterial();
-    this.body = new THREE.Mesh( this.geoBody, this.matBody );
-
-    this.body.scale.set( .4, .4, .4 );
-    this.body.position.set( 0, 10, 0 );
-    this.body.overdraw = true;
-
-    this.scene.add(this.body);
-    this.loaded = true;
-    console.log("Ship loaded");
-};
-*/
 
 /*
 Ship.prototype.fireLaser = function ( quat, euler ) {

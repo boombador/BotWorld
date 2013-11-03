@@ -14,6 +14,17 @@ var physEntity = function(spec, my) {
 	that.moveVector = spec.moveVector || new THREE.Vector3( 0, 0, 0 );
 	that.rotationVector = spec.rotationVector || new THREE.Vector3( 0, 0, 0 );
     that.vel = spec.vel || new THREE.Vector3( 0, 0, 0 );
+    that.thrust = { up: 0, down: 0, left: 0, right: 0, forward: 0, back: 0 };
+    that.angularThrust = { pitchUp: 0, pitchDown: 0, yawLeft: 0, yawRight: 0, rollLeft: 0, rollRight: 0 };
+	that.tmpQuaternion = new THREE.Quaternion();
+
+    that.update = function( delta ) {
+        // update ship
+        // console.log(that.entity.moveVector);
+        // console.log(that.entity.mesh.rotation);
+        that.translate( delta );
+        that.rotate( delta );
+    };
 
     that.loadMesh = function( geometry ) {
 
@@ -34,6 +45,56 @@ var physEntity = function(spec, my) {
         that.scene.add(that.mesh);
         that.loaded = true;
     };
+
+    that.translate = function() {
+        var dv = new THREE.Vector3();
+        return function ( delta, thrust ) {
+            var moveMult = delta * that.accLinear;
+
+            thrust = that.thrust;
+
+            var forward = (
+                    thrust.forward || ( that.autoForward && !thrust.back )
+                    ) ? 1 : 0;
+            that.moveVector.x = ( -thrust.left    + thrust.right );
+            that.moveVector.y = ( -thrust.down    + thrust.up );
+            that.moveVector.z = ( -forward + thrust.back );
+
+            dv.copy( that.moveVector );
+            dv.applyQuaternion( that.mesh.quaternion );
+            dv.multiplyScalar( moveMult );
+            that.vel.add( dv );
+            that.mesh.position.add( that.vel );
+        };
+    }();
+
+    that.rotate = function() {
+        return function ( delta ) {
+            var rotMult = delta * that.accAngular;
+
+            // console.log(angularThrust);
+            that.rotationVector.x = ( -that.angularThrust.pitchDown + that.angularThrust.pitchUp );
+            that.rotationVector.y = ( -that.angularThrust.yawRight  + that.angularThrust.yawLeft );
+            that.rotationVector.z = ( -that.angularThrust.rollRight + that.angularThrust.rollLeft );
+            //if (that.rotationVector.x != 0
+                    //|| that.rotationVector.y != 0
+                    //|| that.rotationVector.z != 0) {
+                //debugger;
+            //}
+
+            // perform update
+            that.tmpQuaternion.set(
+                    that.rotationVector.x * rotMult,
+                    that.rotationVector.y * rotMult,
+                    that.rotationVector.z * rotMult, 1
+                    ).normalize();
+            that.mesh.quaternion.multiply( that.tmpQuaternion );
+
+            // expose the rotation vector for convenience
+            that.mesh.rotation.setEulerFromQuaternion( that.mesh.quaternion, that.mesh.eulerOrder );
+        };
+
+    }();
 
     return that;
 };

@@ -82,11 +82,12 @@ var engine = function(spec) {
             }
         } else if (that.state == 'main') {
             var delta = that.clock.getDelta();
-            var msg = that.controls.update( delta );
-            if (msg.type == 'newProjectile') {
-                that.projectiles.push( msg.content );
-                that.scene.add( msg.content.body );
-            }
+            that.controls.commandScan();
+            that.ship.update( delta );
+            //if (msg.type == 'newProjectile') {
+                //that.projectiles.push( msg.content );
+                //that.scene.add( msg.content.body );
+            //}
             that.updateProjectiles( delta );
             that.updateCamera();
             that.detectCollisions();
@@ -100,7 +101,7 @@ var engine = function(spec) {
 
     that.detectCollisions = function () {
         var asts = that.asteroids;
-        var shipPos = that.controls.object.position;
+        var shipPos = that.controls.mesh.position;
         var astPos = new THREE.Vector3();
         for (var i = 0; i < asts.length; i++) {
             var a = asts[i];
