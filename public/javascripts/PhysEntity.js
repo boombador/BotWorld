@@ -1,23 +1,25 @@
 var physEntity = function(spec, my) {
     var that = {};
-    that.engine = spec.engine || null;
     that.handle = spec.handle;
-    that.maxSpeed = spec.maxSpeed || .2;
-    that.mat = spec.material ||
-        new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, wireframe: true } );
-    that.loaded = false;
+    that.engine = spec.engine || null;
 
+    that.maxSpeed = spec.maxSpeed || .2;
     that.accLinear = .5;
     that.accAngular = Math.PI / 3;
 
-    that.mesh = spec.mesh || null;
-
 	that.moveVector = spec.moveVector || new THREE.Vector3( 0, 0, 0 );
 	that.rotationVector = spec.rotationVector || new THREE.Vector3( 0, 0, 0 );
-    that.vel = spec.vel || new THREE.Vector3( 0, 0, 0 );
     that.thrust = { up: 0, down: 0, left: 0, right: 0, forward: 0, back: 0 };
     that.angularThrust = { pitchUp: 0, pitchDown: 0, yawLeft: 0, yawRight: 0, rollLeft: 0, rollRight: 0 };
+    that.msg = { type: 'init' };
+
+    that.vel = spec.vel || new THREE.Vector3( 0, 0, 0 );
 	that.tmpQuaternion = new THREE.Quaternion();
+
+    that.loaded = false;
+    that.geoBody = spec.geo || new THREE.CubeGeometry(1,1,1);
+    that.matBody = spec.mat || new THREE.MeshNormalMaterial();
+    that.mesh = spec.mesh || null;
 
     that.update = function( delta ) {
         that.translate( delta );
@@ -39,7 +41,6 @@ var physEntity = function(spec, my) {
             console.log("already loaded a mesh, not generating a new one");
         } else {
             that.geoBody = geometry;
-            that.matBody = new THREE.MeshNormalMaterial();
             that.mesh = new THREE.Mesh( that.geoBody, that.matBody );
         }
 
@@ -57,7 +58,6 @@ var physEntity = function(spec, my) {
         var dv = new THREE.Vector3();
         return function ( delta, thrust ) {
             var moveMult = delta * that.accLinear;
-
             thrust = that.thrust;
 
             var forward = (

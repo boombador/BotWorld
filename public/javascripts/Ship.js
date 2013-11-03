@@ -8,21 +8,15 @@ var ship = function(spec)  {
         });
     };
 
-    that.fireLaser = function ( quat, euler ) {
+    that.fireLaser = function () {
         var quat = that.mesh.quaternion;
         var euler = that.mesh.eulerOrder;
-        var laserGeo = new THREE.CubeGeometry(1,1,1); // a cube of side length one
-        var green = new THREE.MeshBasicMaterial( { color: 0x00ff00 } ); // a simple green material
-        var laser = new THREE.Mesh( laserGeo, green );
-        laser.position.copy( that.mesh.position );
 
-        var vel = new THREE.Vector3();
-        vel.copy( that.mesh.rotation ).normalize().multiplyScalar( 3 );
-        vel.setEulerFromQuaternion( quat, euler );
-        vel.normalize().multiplyScalar( 10 );
+        var laserObj = projectile({ vel: that.vel });
+        laserObj.mesh.position.copy( that.mesh.position );
 
-        that.engine.projectiles.push( laser );
-        that.engine.scene.add( laser );
+        that.engine.projectiles.push( laserObj );
+        that.engine.scene.add( laserObj.mesh );
     };
 
     return that;
