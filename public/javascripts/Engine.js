@@ -95,8 +95,9 @@ var engine = function(spec) {
     };
 
     that.updateCamera = function() {
-        that.camera.position.copy( that.cameraFollow.position );
-        that.camera.rotation.copy( that.cameraFollow.rotation );
+        debugger;
+        that.camera.position.copy( that.ship.mesh.position );
+        that.camera.rotation.copy( that.ship.mesh.rotation );
     };
 
     that.detectCollisions = function () {
