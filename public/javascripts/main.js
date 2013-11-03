@@ -13,7 +13,10 @@ engine = {
     asteroids: [],
     projectiles: [],
     controls: null,
-    cameraFollow: null,
+    cameraFollow: {
+        position: new THREE.Vector3(0, 0, 0),
+        rotation: new THREE.Vector3(1, 0, 0)
+    },
     followDist: 4,
 
     resize: function( button, size ) {
@@ -96,8 +99,8 @@ engine = {
     },
 
     updateCamera: function() {
-        this.camera.position.copy( this.cameraFollow.body.position );
-        this.camera.rotation.copy( this.cameraFollow.body.rotation );
+        this.camera.position.copy( this.cameraFollow.position );
+        this.camera.rotation.copy( this.cameraFollow.rotation );
     },
 
     detectCollisions: function () {
@@ -125,14 +128,10 @@ engine = {
     },
 
     initWorld: function() {
-        this.ship = new Ship("eman");
+        this.ship = ship({ handle: "eman" });
         this.ship.init( this.loader, this.scene );
 
-        this.platform = new Platform();
         this.generateAsteroids();
-
-        this.cameraFollow = this.ship;
-        // this.scene.add( this.platform.body );
     }
 }
 

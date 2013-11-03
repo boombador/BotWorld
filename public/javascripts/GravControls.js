@@ -6,18 +6,12 @@ THREE.GravControls = function ( entity ) {
 
     this.keyboard = new THREEx.KeyboardState();
     this.entity = entity;
-    this.object = entity.body;
-    this.object.position.set( 0, 0, 0 );
-	this.object.useQuaternion = true;
-    this.accLinear = .5;
-    this.accAngular = Math.PI / 3;
+
+    this.object = entity.mesh;
+
 	this.dragToLook = false;
 	this.autoForward = false;
-
 	this.tmpQuaternion = new THREE.Quaternion();
-	this.moveVector = new THREE.Vector3( 0, 0, 0 );
-	this.rotationVector = new THREE.Vector3( 0, 0, 0 );
-    this.vel = new THREE.Vector3( 0, 0, 0 );
 };
 
 THREE.GravControls.prototype = {
@@ -39,15 +33,15 @@ THREE.GravControls.prototype = {
             angularThrust.rollLeft = this.keyboard.pressed( "q" ) ? 1 : 0;
             angularThrust.rollRight = this.keyboard.pressed( "e" ) ? 1 : 0;
 
-            this.rotationVector.x = ( -angularThrust.pitchDown + angularThrust.pitchUp );
-            this.rotationVector.y = ( -angularThrust.yawRight  + angularThrust.yawLeft );
-            this.rotationVector.z = ( -angularThrust.rollRight + angularThrust.rollLeft );
+            this.entity.rotationVector.x = ( -angularThrust.pitchDown + angularThrust.pitchUp );
+            this.entity.rotationVector.y = ( -angularThrust.yawRight  + angularThrust.yawLeft );
+            this.entity.rotationVector.z = ( -angularThrust.rollRight + angularThrust.rollLeft );
 
             // perform update
             this.tmpQuaternion.set(
-                    this.rotationVector.x * rotMult,
-                    this.rotationVector.y * rotMult,
-                    this.rotationVector.z * rotMult, 1
+                    this.entity.rotationVector.x * rotMult,
+                    this.entity.rotationVector.y * rotMult,
+                    this.entity.rotationVector.z * rotMult, 1
                     ).normalize();
             this.object.quaternion.multiply( this.tmpQuaternion );
 
@@ -74,23 +68,24 @@ THREE.GravControls.prototype = {
             var forward = (
                     thrust.forward || ( this.autoForward && !thrust.back )
                     ) ? 1 : 0;
-            this.moveVector.x = ( -thrust.left    + thrust.right );
-            this.moveVector.y = ( -thrust.down    + thrust.up );
-            this.moveVector.z = ( -forward + thrust.back );
+            this.entity.moveVector.x = ( -thrust.left    + thrust.right );
+            this.entity.moveVector.y = ( -thrust.down    + thrust.up );
+            this.entity.moveVector.z = ( -forward + thrust.back );
 
-            dv.copy( this.moveVector );
+            dv.copy( this.entity.moveVector );
             dv.applyQuaternion( this.object.quaternion );
             dv.multiplyScalar( moveMult );
-            this.vel.add( dv );
-            this.object.position.add( this.vel );
+            this.entity.vel.add( dv );
+            this.object.position.add( this.entity.vel );
         };
     }(),
 
     commandScan: function() {
         var fireShot = this.keyboard.pressed( "space" ) ? 1 : 0;
         var update;
-        if (fireShot) update = this.entity.fireLaser( this.object.quaternion, this.object.eulerOrder );
-        else update = { type: 'none' };
+        // if (fireShot) update = this.entity.fireLaser( this.object.quaternion, this.object.eulerOrder );
+        // else update = { type: 'none' };
+        update = { type: 'none' };
         return update;
     },
 

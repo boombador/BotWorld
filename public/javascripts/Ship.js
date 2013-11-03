@@ -1,21 +1,17 @@
+var ship = function(spec)  {
+    var that = physEntity(spec);
 
-function Ship(handle) {
-    this.handle = handle;
-    this.maxSpeed = .2;
-    this.loaded = false;
-    this.mat = new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, wireframe: true } );
-
-    return this;
-}
-
-Ship.prototype.init = function( loader, scene ){
-    this.scene = scene;
-    var that = this;
-    loader.load( "models/viper2.js", function(geometry){
-        that.loadMesh(geometry);
-    });
+    that.init = function(loader, scene) {
+        that.scene = scene;
+        thine = that;
+        loader.load( "models/viper2.js", function(geometry){
+            thine.loadMesh(geometry);
+        });
+    };
+    return that;
 };
 
+/*
 Ship.prototype.loadMesh = function( geometry ) {
     this.geoBody = geometry;
     this.matBody = new THREE.MeshNormalMaterial();
@@ -29,7 +25,9 @@ Ship.prototype.loadMesh = function( geometry ) {
     this.loaded = true;
     console.log("Ship loaded");
 };
+*/
 
+/*
 Ship.prototype.fireLaser = function ( quat, euler ) {
 
     var laserGeo = new THREE.CubeGeometry(1,1,1); // a cube of side length one
@@ -49,4 +47,4 @@ Ship.prototype.fireLaser = function ( quat, euler ) {
         }
     };
 };
-
+*/
