@@ -11,19 +11,23 @@ var gravControls = function( spec ) {
     that.entity = spec.entity;
     that.mesh = spec.entity.mesh;
 
-	that.dragToLook = false;
-	that.autoForward = false;
+    that.dragToLook = false;
+    that.autoForward = false;
 
     that.movementSpeed = spec.movementSpeed || 10;
     that.rollSpeed = spec.rollSpeed || Math.PI / 6;
     that.autoForward = spec.autoForward || false;
     that.dragToLook = spec.dragToLook || false;
-
-    that.update = { type: 'none' };
+    that.map = { space: "fireLaser" };
 
     that.commandScan = function() {
-        var fireShot = that.keyboard.pressed( "space" ) ? 1 : 0;
-        if (fireShot) update = that.entity.fireLaser( that.mesh.quaternion, that.mesh.eulerOrder );
+        that.entity.msg = { type: 'none' };
+        for (key in that.map) {
+            if (that.keyboard.pressed( key ) ? 1 : 0) {
+                that.entity.msg.type = 'command';
+                that.entity.msg.value = that.map[key];
+            }
+        }
 
         that.entity.thrust.forward = that.keyboard.pressed( "w" ) ? 1 : 0;
         that.entity.thrust.back = that.keyboard.pressed( "s" ) ? 1 : 0;

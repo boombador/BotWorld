@@ -1,5 +1,6 @@
 var physEntity = function(spec, my) {
     var that = {};
+    that.engine = spec.engine || null;
     that.handle = spec.handle;
     that.maxSpeed = spec.maxSpeed || .2;
     that.mat = spec.material ||
@@ -19,11 +20,17 @@ var physEntity = function(spec, my) {
 	that.tmpQuaternion = new THREE.Quaternion();
 
     that.update = function( delta ) {
-        // update ship
-        // console.log(that.entity.moveVector);
-        // console.log(that.entity.mesh.rotation);
         that.translate( delta );
         that.rotate( delta );
+
+        if (that.msg.type == 'command') {
+            func = that[that.msg.value];
+            if (typeof func == 'function') {
+                func();
+            } else {
+                console.log("function not found: "+that.msg.value);
+            }
+        }
     };
 
     that.loadMesh = function( geometry ) {
@@ -71,16 +78,9 @@ var physEntity = function(spec, my) {
     that.rotate = function() {
         return function ( delta ) {
             var rotMult = delta * that.accAngular;
-
-            // console.log(angularThrust);
             that.rotationVector.x = ( -that.angularThrust.pitchDown + that.angularThrust.pitchUp );
             that.rotationVector.y = ( -that.angularThrust.yawRight  + that.angularThrust.yawLeft );
             that.rotationVector.z = ( -that.angularThrust.rollRight + that.angularThrust.rollLeft );
-            //if (that.rotationVector.x != 0
-                    //|| that.rotationVector.y != 0
-                    //|| that.rotationVector.z != 0) {
-                //debugger;
-            //}
 
             // perform update
             that.tmpQuaternion.set(

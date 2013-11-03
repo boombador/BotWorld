@@ -66,6 +66,7 @@ var engine = function(spec) {
     that.updateProjectiles = function( delta ) {
         for (var i = 0; i < that.projectiles.length; i++) {
             var proj = that.projectiles[i];
+            debugger;
             var ds = proj.velocity.clone().multiplyScalar( delta );
             proj.body.position.add( ds );
         }
@@ -74,7 +75,7 @@ var engine = function(spec) {
     that.handleState = function () {
         if (that.state == 'loading') {
             if (that.ship.loaded) {
-                that.controls = gravControls({ entity: that.ship, });
+                that.controls = gravControls({ entity: that.ship});
 
                 that.state = 'main';
                 console.log("game starting");
@@ -84,10 +85,6 @@ var engine = function(spec) {
             var delta = that.clock.getDelta();
             that.controls.commandScan();
             that.ship.update( delta );
-            //if (msg.type == 'newProjectile') {
-                //that.projectiles.push( msg.content );
-                //that.scene.add( msg.content.body );
-            //}
             that.updateProjectiles( delta );
             that.updateCamera();
             that.detectCollisions();
@@ -95,7 +92,6 @@ var engine = function(spec) {
     };
 
     that.updateCamera = function() {
-        debugger;
         that.camera.position.copy( that.ship.mesh.position );
         that.camera.rotation.copy( that.ship.mesh.rotation );
     };
@@ -125,7 +121,7 @@ var engine = function(spec) {
     };
 
     that.initWorld = function() {
-        that.ship = ship({ handle: "eman" });
+        that.ship = ship({ handle: "eman", engine: that });
         that.ship.init( that.loader, that.scene );
 
         that.generateAsteroids();
