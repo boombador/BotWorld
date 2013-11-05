@@ -16,10 +16,13 @@ var physEntity = function(spec, my) {
     that.vel = spec.vel || new THREE.Vector3( 0, 0, 0 );
 	that.tmpQuaternion = new THREE.Quaternion();
 
-    that.loaded = false;
-    that.geoBody = spec.geo || new THREE.CubeGeometry(1,1,1);
-    that.matBody = spec.mat || new THREE.MeshNormalMaterial();
-    that.mesh = spec.mesh || null;
+    if (!spec.mesh) {
+        that.geoBody = spec.geo || new THREE.CubeGeometry(1,1,1);
+        that.matBody = spec.mat || new THREE.MeshNormalMaterial();
+        that.mesh = new THREE.Mesh( that.geoBody, that.matBody );
+    } else {
+        that.mesh = spec.mesh;
+    }
 
     that.update = function( delta ) {
         that.translate( delta );
